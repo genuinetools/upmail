@@ -3,6 +3,7 @@ package email
 import (
 	"fmt"
 	"net/smtp"
+	"time"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/sourcegraph/checkup"
@@ -42,8 +43,9 @@ func (n Notifier) sendEmail(result checkup.Result) error {
 	body := fmt.Sprintf(`From: %s
 To: %s
 Subject: [UPMAIL]: %s %s
+Timestamp: %s
 %s
-`, n.Sender, n.Recipient, result.Title, result.Status(), result.String())
+`, n.Sender, n.Recipient, result.Title, result.Status(), time.Now().String(), result.String())
 
 	// send the email
 	if err := smtp.SendMail(n.Server, n.Auth, n.Sender, []string{n.Recipient}, []byte(body)); err != nil {

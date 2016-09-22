@@ -13,7 +13,7 @@ upmail - v0.1.0
         config file location (default "checkup.json")
   -d    run in debug mode
   -interval string
-        check interval (ex. 5ms, 10s, 1m, 3h) (default "10s")
+        check interval (ex. 5ms, 10s, 1m, 3h) (default "10m")
   -password string
         SMTP server password
   -recipient string

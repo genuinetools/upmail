@@ -43,7 +43,7 @@ func init() {
 	// parse flags
 	flag.StringVar(&configFile, "config", "checkup.json", "config file location")
 	flag.StringVar(&recipient, "recipient", "", "recipient for email notifications")
-	flag.StringVar(&interval, "interval", "10s", "check interval (ex. 5ms, 10s, 1m, 3h)")
+	flag.StringVar(&interval, "interval", "10m", "check interval (ex. 5ms, 10s, 1m, 3h)")
 
 	flag.StringVar(&smtpServer, "server", "", "SMTP server for email notifications")
 	flag.StringVar(&smtpSender, "sender", "", "SMTP default sender email address for email notifications")
