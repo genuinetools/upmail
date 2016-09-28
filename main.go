@@ -130,7 +130,7 @@ func main() {
 	ticker = time.NewTicker(dur)
 
 	for range ticker.C {
-		if _, err := c.Check(); err != nil {
+		if err := c.CheckAndStore(); err != nil {
 			logrus.Warnf("check failed: %v", err)
 		}
 	}
