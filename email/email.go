@@ -43,9 +43,10 @@ func (n Notifier) sendEmail(result checkup.Result) error {
 	body := fmt.Sprintf(`From: %s
 To: %s
 Subject: [UPMAIL]: %s %s
-Timestamp: %s
 %s
-`, n.Sender, n.Recipient, result.Title, result.Status(), time.Now().String(), result.String())
+
+Time: %s
+`, n.Sender, n.Recipient, result.Title, result.Status(), result.String(), time.Now().Format(time.UnixDate))
 
 	// send the email
 	if err := smtp.SendMail(n.Server, n.Auth, n.Sender, []string{n.Recipient}, []byte(body)); err != nil {
