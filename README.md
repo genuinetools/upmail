@@ -1,6 +1,6 @@
 # upmail
 
-[![Travis CI](https://travis-ci.org/jfrazelle/upmail.svg?branch=master)](https://travis-ci.org/jfrazelle/upmail)
+[![Travis CI](https://travis-ci.org/jessfraz/upmail.svg?branch=master)](https://travis-ci.org/jessfraz/upmail)
 
 Provides email notifications for [checkup](https://github.com/sourcegraph/checkup).
 

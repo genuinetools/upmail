@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/jfrazelle/upmail/email"
+	"github.com/jessfraz/upmail/email"
 	"github.com/sourcegraph/checkup"
 )
 
