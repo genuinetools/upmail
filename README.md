@@ -2,7 +2,7 @@
 
 [![Travis CI](https://travis-ci.org/jessfraz/upmail.svg?branch=master)](https://travis-ci.org/jessfraz/upmail)
 
-Provides email notifications for [checkup](https://github.com/sourcegraph/checkup).
+Provides email notifications for [sourcegraph/checkup](https://github.com/sourcegraph/checkup).
 
 ## Usage
 
