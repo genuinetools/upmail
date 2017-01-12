@@ -5,7 +5,7 @@
 			"importpath": "github.com/Sirupsen/logrus",
 			"repository": "https://github.com/Sirupsen/logrus",
 			"vcs": "git",
-			"revision": "3ec0642a7fb6488f65b06f9040adc67e3990296a",
+			"revision": "800b0fc4a6cbf28a01d026ab54d6dec7050282fa",
 			"branch": "master",
 			"notests": true
 		},
@@ -21,7 +21,7 @@
 			"importpath": "github.com/aws/aws-sdk-go/aws",
 			"repository": "https://github.com/aws/aws-sdk-go",
 			"vcs": "git",
-			"revision": "7a81396c57134038e554b2ac86be4653018b20f9",
+			"revision": "8649d278323ebf6bd20c9cd56ecb152b1c617375",
 			"branch": "master",
 			"path": "aws",
 			"notests": true
@@ -157,6 +157,24 @@
 			"vcs": "git",
 			"revision": "f12c6236fe7b5cf6bcf30e5935d08cb079d78334",
 			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/golang/protobuf/proto",
+			"repository": "https://github.com/golang/protobuf",
+			"vcs": "git",
+			"revision": "8ee79997227bf9b34611aee7946ae64735e6fd93",
+			"branch": "master",
+			"path": "/proto",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/golang/protobuf/ptypes/any",
+			"repository": "https://github.com/golang/protobuf",
+			"vcs": "git",
+			"revision": "8ee79997227bf9b34611aee7946ae64735e6fd93",
+			"branch": "master",
+			"path": "ptypes/any",
 			"notests": true
 		},
 		{
@@ -393,6 +411,15 @@
 			"notests": true
 		},
 		{
+			"importpath": "golang.org/x/net/context",
+			"repository": "https://go.googlesource.com/net",
+			"vcs": "git",
+			"revision": "60c41d1de8da134c05b7b40154a9a82bf5b7edb9",
+			"branch": "master",
+			"path": "/context",
+			"notests": true
+		},
+		{
 			"importpath": "golang.org/x/sys/unix",
 			"repository": "https://go.googlesource.com/sys",
 			"vcs": "git",
@@ -453,6 +480,14 @@
 			"revision": "2df9074612f50810d82416d2229398a1e7188c5c",
 			"branch": "master",
 			"path": "/unicode/norm",
+			"notests": true
+		},
+		{
+			"importpath": "google.golang.org/appengine",
+			"repository": "https://github.com/golang/appengine",
+			"vcs": "git",
+			"revision": "8758a385849434ba5eac8aeedcf5192c5a0f5f10",
+			"branch": "master",
 			"notests": true
 		},
 		{

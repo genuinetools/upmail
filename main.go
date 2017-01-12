@@ -13,6 +13,8 @@ import (
 	"syscall"
 	"time"
 
+	"google.golang.org/appengine"
+
 	"github.com/Sirupsen/logrus"
 	"github.com/jessfraz/upmail/email"
 	"github.com/sourcegraph/checkup"
@@ -30,6 +32,8 @@ var (
 	recipient  string
 	interval   string
 
+	ae bool
+
 	smtpServer   string
 	smtpSender   string
 	smtpUsername string
@@ -44,6 +48,8 @@ func init() {
 	flag.StringVar(&configFile, "config", "checkup.json", "config file location")
 	flag.StringVar(&recipient, "recipient", "", "recipient for email notifications")
 	flag.StringVar(&interval, "interval", "10m", "check interval (ex. 5ms, 10s, 1m, 3h)")
+
+	flag.BoolVar(&ae, "appengine", false, "enable the server for running in Google App Engine")
 
 	flag.StringVar(&smtpServer, "server", "", "SMTP server for email notifications")
 	flag.StringVar(&smtpSender, "sender", "", "SMTP default sender email address for email notifications")
@@ -77,8 +83,8 @@ func init() {
 	if recipient == "" {
 		usageAndExit("Recipient cannot be empty.", 1)
 	}
-	if smtpServer == "" {
-		usageAndExit("SMTP server cannot be empty.", 1)
+	if smtpServer == "" && !ae {
+		usageAndExit("SMTP server cannot be empty if not running in App Engine.", 1)
 	}
 }
 
@@ -108,6 +114,7 @@ func main() {
 	}
 
 	n := email.Notifier{
+		AppEngine: ae,
 		Recipient: recipient,
 		Server:    smtpServer,
 		Sender:    smtpSender,
@@ -128,6 +135,11 @@ func main() {
 
 	logrus.Infof("Starting checks that will send emails to: %s", recipient)
 	ticker = time.NewTicker(dur)
+
+	if ae {
+		// setup necessary app engine health checks and listener
+		go appengine.Main()
+	}
 
 	for range ticker.C {
 		if err := c.CheckAndStore(); err != nil {

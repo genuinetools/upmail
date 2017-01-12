@@ -9,22 +9,24 @@ Provides email notifications for [sourcegraph/checkup](https://github.com/source
 ```console
 $ upmail -h
 upmail - v0.1.0
+  -appengine
+    	enable the server for running in Google App Engine
   -config string
-        config file location (default "checkup.json")
-  -d    run in debug mode
+    	config file location (default "checkup.json")
+  -d	run in debug mode
   -interval string
-        check interval (ex. 5ms, 10s, 1m, 3h) (default "10m")
+    	check interval (ex. 5ms, 10s, 1m, 3h) (default "10m")
   -password string
-        SMTP server password
+    	SMTP server password
   -recipient string
-        recipient for email notifications
+    	recipient for email notifications
   -sender string
-        SMTP default sender email address for email notifications
+    	SMTP default sender email address for email notifications
   -server string
-        SMTP server for email notifications
+    	SMTP server for email notifications
   -username string
-        SMTP server username
-  -v    print version and exit (shorthand)
+    	SMTP server username
+  -v	print version and exit (shorthand)
   -version
-        print version and exit
+    	print version and exit
 ```

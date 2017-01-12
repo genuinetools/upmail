@@ -1,9 +1,12 @@
 package email
 
 import (
+	"context"
 	"fmt"
 	"net/smtp"
 	"time"
+
+	"google.golang.org/appengine/mail"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/sourcegraph/checkup"
@@ -11,6 +14,8 @@ import (
 
 // Notifier sends an email notification when something is wrong.
 type Notifier struct {
+	// AppEngine is a boolean containing if this application is running in Google App Engine.
+	AppEngine bool
 	// Recipient is the email address to send the notification to.
 	Recipient string
 	// Server is the email server.
@@ -39,6 +44,22 @@ func (n Notifier) Notify(results []checkup.Result) error {
 }
 
 func (n Notifier) sendEmail(result checkup.Result) error {
+	if n.AppEngine {
+		// send the email with the app engine mail library
+		msg := &mail.Message{
+			Sender:  n.Sender,
+			To:      []string{n.Recipient},
+			Subject: result.Title,
+			Body:    fmt.Sprintf("Time: %s\n\n%s", time.Now().Format(time.UnixDate), result.String()),
+		}
+
+		if err := mail.Send(context.Background(), msg); err != nil {
+			return fmt.Errorf("Send app engine mail failed: %v", err)
+		}
+
+		return nil
+	}
+
 	// create the template
 	body := fmt.Sprintf(`From: %s
 To: %s
