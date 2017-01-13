@@ -16,6 +16,8 @@ upmail - v0.1.0
   -d	run in debug mode
   -interval string
     	check interval (ex. 5ms, 10s, 1m, 3h) (default "10m")
+  -mandrill string
+    	Mandrill API Key to use for sending email (optional)
   -password string
     	SMTP server password
   -recipient string

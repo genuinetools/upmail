@@ -1,21 +1,19 @@
 package email
 
 import (
-	"context"
 	"fmt"
 	"net/smtp"
 	"time"
 
-	"google.golang.org/appengine/mail"
-
 	"github.com/Sirupsen/logrus"
+	"github.com/mattbaird/gochimp"
 	"github.com/sourcegraph/checkup"
 )
 
 // Notifier sends an email notification when something is wrong.
 type Notifier struct {
-	// AppEngine is a boolean containing if this application is running in Google App Engine.
-	AppEngine bool
+	// MandrillAPIKey stores the API for Mandrill if configured.
+	MandrillAPIKey string
 	// Recipient is the email address to send the notification to.
 	Recipient string
 	// Server is the email server.
@@ -44,19 +42,26 @@ func (n Notifier) Notify(results []checkup.Result) error {
 }
 
 func (n Notifier) sendEmail(result checkup.Result) error {
-	if n.AppEngine {
-		// send the email with the app engine mail library
-		msg := &mail.Message{
-			Sender:  n.Sender,
-			To:      []string{n.Recipient},
-			Subject: result.Title,
-			Body:    fmt.Sprintf("Time: %s\n\n%s", time.Now().Format(time.UnixDate), result.String()),
+	if n.MandrillAPIKey != "" {
+		mandrillAPI, err := gochimp.NewMandrill(n.MandrillAPIKey)
+		if err != nil {
+			return fmt.Errorf("Initializing Mandrill API failed: %v", err)
 		}
 
-		if err := mail.Send(context.Background(), msg); err != nil {
-			return fmt.Errorf("Send app engine mail failed: %v", err)
+		message := gochimp.Message{
+			Text:      fmt.Sprintf("Time: %s\n\n%s", time.Now().Format(time.UnixDate), result.String()),
+			Subject:   result.Title,
+			FromEmail: n.Sender,
+			FromName:  n.Sender,
+			To: []gochimp.Recipient{
+				{Email: n.Recipient},
+			},
 		}
-
+		resp, err := mandrillAPI.MessageSend(message, false)
+		if err != nil {
+			return fmt.Errorf("Sending Mandrill message failed: response: %#v error: %v", resp, err)
+		}
+		logrus.Infof("Mandrill send message succeeded: %#v", resp)
 		return nil
 	}
 

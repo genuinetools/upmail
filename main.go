@@ -32,7 +32,8 @@ var (
 	recipient  string
 	interval   string
 
-	ae bool
+	ae             bool
+	mandrillAPIKey string
 
 	smtpServer   string
 	smtpSender   string
@@ -50,6 +51,7 @@ func init() {
 	flag.StringVar(&interval, "interval", "10m", "check interval (ex. 5ms, 10s, 1m, 3h)")
 
 	flag.BoolVar(&ae, "appengine", false, "enable the server for running in Google App Engine")
+	flag.StringVar(&mandrillAPIKey, "mandrill", "", "Mandrill API Key to use for sending email (optional)")
 
 	flag.StringVar(&smtpServer, "server", "", "SMTP server for email notifications")
 	flag.StringVar(&smtpSender, "sender", "", "SMTP default sender email address for email notifications")
@@ -83,8 +85,8 @@ func init() {
 	if recipient == "" {
 		usageAndExit("Recipient cannot be empty.", 1)
 	}
-	if smtpServer == "" && !ae {
-		usageAndExit("SMTP server cannot be empty if not running in App Engine.", 1)
+	if smtpServer == "" && mandrillAPIKey == "" {
+		usageAndExit("SMTP server OR Mandrill API Key cannot be empty.", 1)
 	}
 }
 
@@ -114,10 +116,10 @@ func main() {
 	}
 
 	n := email.Notifier{
-		AppEngine: ae,
-		Recipient: recipient,
-		Server:    smtpServer,
-		Sender:    smtpSender,
+		MandrillAPIKey: mandrillAPIKey,
+		Recipient:      recipient,
+		Server:         smtpServer,
+		Sender:         smtpSender,
 		Auth: smtp.PlainAuth(
 			"",
 			smtpUsername,
@@ -139,6 +141,11 @@ func main() {
 	if ae {
 		// setup necessary app engine health checks and listener
 		go appengine.Main()
+	}
+
+	logrus.Info("Performing initial check")
+	if err := c.CheckAndStore(); err != nil {
+		logrus.Fatalf("check failed: %v", err)
 	}
 
 	for range ticker.C {

@@ -210,6 +210,14 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/mattbaird/gochimp",
+			"repository": "https://github.com/mattbaird/gochimp",
+			"vcs": "git",
+			"revision": "0fee1e28b9a34db55eb4d6b4e7ba3d675219935d",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/mattn/go-colorable",
 			"repository": "https://github.com/mattn/go-colorable",
 			"vcs": "git",
