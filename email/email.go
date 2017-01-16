@@ -6,12 +6,17 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
+	mailgun "github.com/mailgun/mailgun-go"
 	"github.com/mattbaird/gochimp"
 	"github.com/sourcegraph/checkup"
 )
 
 // Notifier sends an email notification when something is wrong.
 type Notifier struct {
+	// MailgunAPIKey stores the API key for Mailgun if configured.
+	MailgunAPIKey string
+	// MailgunDomain stores the domain for Mailgun if configured.
+	MailgunDomain string
 	// MandrillAPIKey stores the API for Mandrill if configured.
 	MandrillAPIKey string
 	// Recipient is the email address to send the notification to.
@@ -42,6 +47,22 @@ func (n Notifier) Notify(results []checkup.Result) error {
 }
 
 func (n Notifier) sendEmail(result checkup.Result) error {
+	if n.MailgunAPIKey != "" && n.MailgunDomain != "" {
+		mailgunClient := mailgun.NewMailgun(n.MailgunDomain, n.MailgunAPIKey, "")
+
+		msg, _, err := mailgunClient.Send(mailgunClient.NewMessage(
+			/* From */ fmt.Sprintf("%s <%s>", n.Sender, n.Sender),
+			/* Subject */ fmt.Sprintf("[UPMAIL]: %s %s", result.Title, result.Status()),
+			/* Body */ fmt.Sprintf("Time: %s\n\n%s", time.Now().Format(time.UnixDate), result.String()),
+			/* To */ n.Recipient,
+		))
+		if err != nil {
+			return fmt.Errorf("Sending Mailgun message failed: response: %#v error: %v", msg, err)
+		}
+		logrus.Infof("Mailgun send message succeeded: %#v", msg)
+		return nil
+	}
+
 	if n.MandrillAPIKey != "" {
 		mandrillAPI, err := gochimp.NewMandrill(n.MandrillAPIKey)
 		if err != nil {
@@ -50,7 +71,7 @@ func (n Notifier) sendEmail(result checkup.Result) error {
 
 		message := gochimp.Message{
 			Text:      fmt.Sprintf("Time: %s\n\n%s", time.Now().Format(time.UnixDate), result.String()),
-			Subject:   result.Title,
+			Subject:   fmt.Sprintf("[UPMAIL]: %s %s", result.Title, result.Status()),
 			FromEmail: n.Sender,
 			FromName:  n.Sender,
 			To: []gochimp.Recipient{

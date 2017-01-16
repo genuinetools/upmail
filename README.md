@@ -16,6 +16,10 @@ upmail - v0.1.0
   -d	run in debug mode
   -interval string
     	check interval (ex. 5ms, 10s, 1m, 3h) (default "10m")
+  -mailgun string
+    	Mailgun API Key to use for sending email (optional)
+  -mailgun-domain string
+    	Mailgun Domain to use for sending email (optional)
   -mandrill string
     	Mandrill API Key to use for sending email (optional)
   -password string

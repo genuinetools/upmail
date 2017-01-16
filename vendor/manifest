@@ -144,6 +144,14 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/drhodes/golorem",
+			"repository": "https://github.com/drhodes/golorem",
+			"vcs": "git",
+			"revision": "ecccc744c2d953a1e13cbe5e5fc5d4cbc9b8daeb",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/fatih/color",
 			"repository": "https://github.com/fatih/color",
 			"vcs": "git",
@@ -152,10 +160,26 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/fatih/structs",
+			"repository": "https://github.com/fatih/structs",
+			"vcs": "git",
+			"revision": "a720dfa8df582c51dee1b36feabb906bde1588bd",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/fsnotify/fsnotify",
 			"repository": "https://github.com/fsnotify/fsnotify",
 			"vcs": "git",
 			"revision": "f12c6236fe7b5cf6bcf30e5935d08cb079d78334",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/go-ini/ini",
+			"repository": "https://github.com/go-ini/ini",
+			"vcs": "git",
+			"revision": "6f66b0e091edb3c7b380f7c4f0f884274d550b67",
 			"branch": "master",
 			"notests": true
 		},
@@ -206,6 +230,22 @@
 			"repository": "https://github.com/magiconair/properties",
 			"vcs": "git",
 			"revision": "0723e352fa358f9322c938cc2dadda874e9151a9",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/mailgun/log",
+			"repository": "https://github.com/mailgun/log",
+			"vcs": "git",
+			"revision": "2f35a4607f1abf71f97f77f99b0de8493ef6f4ef",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/mailgun/mailgun-go",
+			"repository": "https://github.com/mailgun/mailgun-go",
+			"vcs": "git",
+			"revision": "6aee6d4321a8ea0e498c44772742e225e76c7ef7",
 			"branch": "master",
 			"notests": true
 		},
@@ -334,6 +374,14 @@
 			"repository": "https://github.com/spf13/viper",
 			"vcs": "git",
 			"revision": "a78f70b5b977efe08e313a9e2341c3f5457abdaf",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/thrawn01/args",
+			"repository": "https://github.com/thrawn01/args",
+			"vcs": "git",
+			"revision": "4f8037a0a31a25408b95e68377c94a04c12149af",
 			"branch": "master",
 			"notests": true
 		},
@@ -503,6 +551,14 @@
 			"repository": "https://gopkg.in/airbrake/gobrake.v2",
 			"vcs": "git",
 			"revision": "5d77bd50d083834501349f8be70197b26963674d",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "gopkg.in/fsnotify.v1",
+			"repository": "https://gopkg.in/fsnotify.v1",
+			"vcs": "git",
+			"revision": "629574ca2a5df945712d3079857300b5e4da0236",
 			"branch": "master",
 			"notests": true
 		},
