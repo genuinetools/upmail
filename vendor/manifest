@@ -325,7 +325,7 @@
 			"importpath": "github.com/sourcegraph/checkup",
 			"repository": "https://github.com/sourcegraph/checkup",
 			"vcs": "git",
-			"revision": "504084fe78098023139598bfebf9b1afdf3ed1c0",
+			"revision": "8d16e26a5aa2616e52167d57e2d5f88a819a2a49",
 			"branch": "master",
 			"notests": true
 		},

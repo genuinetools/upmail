@@ -181,6 +181,8 @@ func (c Checkup) MarshalJSON() ([]byte, error) {
 				typeName = "tcp"
 			case DNSChecker:
 				typeName = "dns"
+			case TLSChecker:
+				typeName = "tls"
 			default:
 				return result, fmt.Errorf("unknown Checker type")
 			}
@@ -202,12 +204,16 @@ func (c Checkup) MarshalJSON() ([]byte, error) {
 		}
 		var providerName string
 		switch c.Storage.(type) {
+		case *GitHub:
+			providerName = "github"
 		case S3:
 			providerName = "s3"
 		case FS:
 			providerName = "fs"
+		case SQL:
+			providerName = "sql"
 		default:
-			return result, fmt.Errorf("unknown Storage type")
+			return result, fmt.Errorf("unknown Storage type: %T", c.Storage)
 		}
 		sb = []byte(fmt.Sprintf(`{"provider":"%s",%s`, providerName, string(sb[1:])))
 		wrap("storage", sb)
@@ -297,7 +303,13 @@ func (c *Checkup) UnmarshalJSON(b []byte) error {
 				return err
 			}
 			c.Checkers = append(c.Checkers, checker)
-
+		case "tls":
+			var checker TLSChecker
+			err = json.Unmarshal(raw.Checkers[i], &checker)
+			if err != nil {
+				return err
+			}
+			c.Checkers = append(c.Checkers, checker)
 		default:
 			return fmt.Errorf("%s: unknown Checker type", t.Type)
 		}
@@ -313,6 +325,20 @@ func (c *Checkup) UnmarshalJSON(b []byte) error {
 			c.Storage = storage
 		case "fs":
 			var storage FS
+			err = json.Unmarshal(raw.Storage, &storage)
+			if err != nil {
+				return err
+			}
+			c.Storage = storage
+		case "github":
+			storage := &GitHub{}
+			err = json.Unmarshal(raw.Storage, storage)
+			if err != nil {
+				return err
+			}
+			c.Storage = storage
+		case "sql":
+			var storage SQL
 			err = json.Unmarshal(raw.Storage, &storage)
 			if err != nil {
 				return err
@@ -340,6 +366,15 @@ type Checker interface {
 // Storage can store results.
 type Storage interface {
 	Store([]Result) error
+}
+
+// StorageReader can read results from the Storage.
+type StorageReader interface {
+	// Fetch returns the contents of a check file.
+	Fetch(checkFile string) ([]Result, error)
+	// GetIndex returns the storage index, as a map where keys are check
+	// result filenames and values are the associated check timestamps.
+	GetIndex() (map[string]int64, error)
 }
 
 // Maintainer can maintain a store of results by
@@ -481,6 +516,11 @@ func (r Result) Status() StatusText {
 		return Healthy
 	}
 	return Unknown
+}
+
+// DisableColor disables ANSI colors in the Result default string.
+func DisableColor() {
+	color.NoColor = true
 }
 
 // StatusText is the textual representation of the
