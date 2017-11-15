@@ -17,14 +17,13 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/jessfraz/upmail/email"
+	"github.com/jessfraz/upmail/version"
 	"github.com/sourcegraph/checkup"
 )
 
 const (
 	// BANNER is what is printed for help/info output
 	BANNER = "upmail - %s\n"
-	// VERSION is the binary version.
-	VERSION = "v0.1.0"
 )
 
 var (
@@ -44,8 +43,8 @@ var (
 	smtpUsername string
 	smtpPassword string
 
-	debug   bool
-	version bool
+	debug bool
+	vrsn  bool
 )
 
 func init() {
@@ -66,19 +65,19 @@ func init() {
 	flag.StringVar(&smtpUsername, "username", "", "SMTP server username")
 	flag.StringVar(&smtpPassword, "password", "", "SMTP server password")
 
-	flag.BoolVar(&version, "version", false, "print version and exit")
-	flag.BoolVar(&version, "v", false, "print version and exit (shorthand)")
+	flag.BoolVar(&vrsn, "version", false, "print version and exit")
+	flag.BoolVar(&vrsn, "v", false, "print version and exit (shorthand)")
 	flag.BoolVar(&debug, "d", false, "run in debug mode")
 
 	flag.Usage = func() {
-		fmt.Fprint(os.Stderr, fmt.Sprintf(BANNER, VERSION))
+		fmt.Fprint(os.Stderr, fmt.Sprintf(BANNER, version.VERSION))
 		flag.PrintDefaults()
 	}
 
 	flag.Parse()
 
-	if version {
-		fmt.Printf("%s", VERSION)
+	if vrsn {
+		fmt.Printf("upmail version %s, build %s", version.VERSION, version.GITCOMMIT)
 		os.Exit(0)
 	}
 
