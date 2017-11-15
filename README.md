@@ -8,7 +8,7 @@ Provides email notifications for [sourcegraph/checkup](https://github.com/source
 
 #### Binaries
 
-- **linux** [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-linux-amd64)
+- **linux** [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.2/upmail-linux-amd64)
 
 #### Via Go
 
@@ -20,7 +20,7 @@ $ go get github.com/jessfraz/upmail
 
 ```console
 $ upmail -h
-upmail - v0.1.1
+upmail - v0.1.2
   -appengine
     	enable the server for running in Google App Engine
   -config string
