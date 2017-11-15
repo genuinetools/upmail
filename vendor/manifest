@@ -19,6 +19,14 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/Sirupsen/logrus",
+			"repository": "https://github.com/Sirupsen/logrus",
+			"vcs": "git",
+			"revision": "89742aefa4b206dcf400792f3bd35b542998eb3b",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/andybalholm/cascadia",
 			"repository": "https://github.com/andybalholm/cascadia",
 			"vcs": "git",
@@ -372,6 +380,14 @@
 			"repository": "https://github.com/pkg/sftp",
 			"vcs": "git",
 			"revision": "f6ec992e480925807f691a585c4c36841357ef89",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/sirupsen/logrus",
+			"repository": "https://github.com/sirupsen/logrus",
+			"vcs": "git",
+			"revision": "89742aefa4b206dcf400792f3bd35b542998eb3b",
 			"branch": "master",
 			"notests": true
 		},
