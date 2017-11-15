@@ -33,7 +33,7 @@ func main() {
 	// that all edits are complete and the application can reload the config
 	parser.AddConfig("version").IsInt().Default("0").Help("config file version")
 
-	appConf, err := parser.ParseArgs(nil)
+	appConf, err := parser.Parse(nil)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(-1)

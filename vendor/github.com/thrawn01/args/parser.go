@@ -29,7 +29,7 @@ type ArgParser struct {
 	HelpIO               *os.File
 	helpAdded            bool
 	mutex                sync.Mutex
-	addHelp              bool
+	AddHelpOption        bool
 	args                 []string
 	options              *Options
 	rules                Rules
@@ -44,11 +44,11 @@ type ArgParser struct {
 // Creates a new instance of the argument parser
 func NewParser(modifiers ...ParseModifier) *ArgParser {
 	parser := &ArgParser{
-		WordWrap: 200,
-		mutex:    sync.Mutex{},
-		log:      DefaultLogger,
-		addHelp:  true,
-		HelpIO:   os.Stdout,
+		WordWrap:      200,
+		mutex:         sync.Mutex{},
+		log:           DefaultLogger,
+		AddHelpOption: true,
+		HelpIO:        os.Stdout,
 	}
 	for _, modify := range modifiers {
 		modify(parser)
@@ -56,7 +56,7 @@ func NewParser(modifiers ...ParseModifier) *ArgParser {
 	return parser
 }
 
-// Takes the current parser and return a new parser with
+// Takes the current parser and return a new parser
 // appropriate for use within a command function
 func (self *ArgParser) SubParser() *ArgParser {
 	parser := NewParser()
@@ -74,7 +74,7 @@ func (self *ArgParser) SubParser() *ArgParser {
 	parser.rules = self.rules
 	parser.log = self.log
 	parser.helpAdded = self.helpAdded
-	parser.addHelp = self.addHelp
+	parser.AddHelpOption = self.AddHelpOption
 	parser.options = self.options
 	parser.flags = self.flags
 
@@ -208,24 +208,62 @@ func (self *ArgParser) AddRule(name string, modifier *RuleModifier) *RuleModifie
 			rule.Name = group[2]
 		}
 	} else {
-		if rule.HasFlag(IsCommand) {
+		switch true {
+		case rule.HasFlag(IsCommand):
 			rule.Aliases = append(rule.Aliases, name)
+			rule.Name = fmt.Sprintf("!cmd-%s", name)
+		case rule.HasFlag(IsOption):
+			rule.Aliases = append(rule.Aliases, fmt.Sprintf("--%s", name))
+			rule.Aliases = append(rule.Aliases, fmt.Sprintf("-%s", name))
+			rule.Name = name
+		default:
+			rule.Name = name
 		}
-		rule.Name = name
 	}
 	// Append the rule our list of rules
 	self.rules = append(self.rules, rule)
 	return modifier
 }
 
+// Returns the current list of rules for this parser. If you want to modify a rule
+// use GetRule() instead.
 func (self *ArgParser) GetRules() Rules {
 	return self.rules
 }
 
+// Allow the user to modify an existing parser rule
+//	parser := args.NewParser()
+//	parser.AddOption("--endpoint").Default("http://localhost:19092")
+//	parser.AddOption("--grpc").IsTrue()
+// 	opts := parser.`ParseSimple(nil)
+//
+//	if opts.Bool("grpc") && !opts.WasSeen("endpoint") {
+//		parser.ModifyRule("endpoint").SetDefault("localhost:19091")
+//		opts = parser.ParseSimple(nil)
+//	}
+func (self *ArgParser) ModifyRule(name string) *RuleModifier {
+	for _, rule := range self.rules {
+		if rule.Name == name {
+			return newRuleModifier(rule, self)
+		}
+	}
+	return nil
+}
+
+// Allow the user to inspect a parser rule
+func (self *ArgParser) GetRule(name string) *Rule {
+	for _, rule := range self.rules {
+		if rule.Name == name {
+			return rule
+		}
+	}
+	return nil
+}
+
 func (self *ArgParser) ParseAndRun(args *[]string, data interface{}) (int, error) {
-	_, err := self.ParseArgs(args)
+	_, err := self.Parse(args)
 	if err != nil {
-		if AskedForHelp(err) {
+		if IsHelpError(err) {
 			self.PrintHelp()
 			return 1, nil
 		}
@@ -244,8 +282,8 @@ func (self *ArgParser) RunCommand(data interface{}) (int, error) {
 	}
 
 	parser := self.SubParser()
-	retCode := self.Command.CommandFunc(parser, data)
-	return retCode, nil
+	retCode, err := self.Command.CommandFunc(parser, data)
+	return retCode, err
 }
 
 func (self *ArgParser) HasHelpOption() bool {
@@ -262,9 +300,32 @@ func (self *ArgParser) HasHelpOption() bool {
 	return false
 }
 
-// Will parse the commandline, but also print help and exit if the user asked for --help
-func (self *ArgParser) ParseArgsSimple(args *[]string) *Options {
-	opt, err := self.ParseArgs(args)
+// Parses the command line and prints errors and help if needed
+// if user asked for --help print the help message and return nil.
+// if there was an error parsing, print the error to stderr and return ni
+//	opts := parser.ParseSimple(nil)
+//	if opts != nil {
+//		return 0, nil
+//	}
+func (self *ArgParser) ParseSimple(args *[]string) *Options {
+	opt, err := self.Parse(args)
+
+	// We could have a non critical error, in addition to the user asking for help
+	if opt != nil && opt.Bool("help") {
+		self.PrintHelp()
+		return nil
+	}
+	// Print errors to stderr and include our help message
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err.Error())
+		return nil
+	}
+	return opt
+}
+
+// Parse the commandline, but also print help and exit if the user asked for --help
+func (self *ArgParser) ParseOrExit(args *[]string) *Options {
+	opt, err := self.Parse(args)
 
 	// We could have a non critical error, in addition to the user asking for help
 	if opt != nil && opt.Bool("help") {
@@ -274,14 +335,13 @@ func (self *ArgParser) ParseArgsSimple(args *[]string) *Options {
 	// Print errors to stderr and include our help message
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
-		self.PrintHelp()
 		os.Exit(1)
 	}
 	return opt
 }
 
 // Parses command line arguments using os.Args if 'args' is nil
-func (self *ArgParser) ParseArgs(args *[]string) (*Options, error) {
+func (self *ArgParser) Parse(args *[]string) (*Options, error) {
 	if args != nil {
 		self.args = copyStringSlice(*args)
 	} else if args == nil && !self.IsSubParser {
@@ -289,7 +349,7 @@ func (self *ArgParser) ParseArgs(args *[]string) (*Options, error) {
 		self.args = copyStringSlice(os.Args[1:])
 	}
 
-	if self.addHelp && !self.HasHelpOption() {
+	if self.AddHelpOption && !self.HasHelpOption() {
 		// Add help option if --help or -h are not already taken by other options
 		self.AddOption("--help").Alias("-h").IsTrue().Help("Display this help message and exit")
 		self.helpAdded = true
@@ -303,7 +363,7 @@ func (self *ArgParser) parseUntil(terminator string) (*Options, error) {
 	// Sanity Check
 	if len(self.rules) == 0 {
 		return nil, errors.New("Must create some options to match with args.AddOption()" +
-			" before calling arg.ParseArgs()")
+			" before calling arg.Parse()")
 	}
 
 	if err := self.ValidateRules(); err != nil {
@@ -361,14 +421,22 @@ Apply:
 	// TODO: This should include the isRequired check
 	// return self.PostValidation(self.Apply(nil))
 
-	// If we specified a command, we probably do not want help even if we see -h on the commandline
-	if self.helpAdded && opts.Bool("help") && self.Command == nil {
+	// When the user asks for --help
+	if self.helpAdded && opts.Bool("help") {
+		// Ignore the --help request if we see a sub command so the
+		// sub command gets a change to process the --help request
+		if self.Command != nil {
+			// root parsers that want to know if the -h option was provided
+			// can still ask if the option was `WasSeen("help")`
+			rule := opts.InspectOpt("help").GetRule()
+			return opts.SetWithRule("help", false, rule), err
+		}
 		return opts, &HelpError{}
 	}
 	return opts, err
 }
 
-// Gather all the values from our rules, then apply the passed in map to any rules that don't have a computed value.
+// Gather all the values from our rules, then apply the passed in options to any rules that don't have a computed value.
 func (self *ArgParser) Apply(values *Options) (*Options, error) {
 	results := self.NewOptions()
 

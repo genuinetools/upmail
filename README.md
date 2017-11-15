@@ -8,11 +8,7 @@ Provides email notifications for [sourcegraph/checkup](https://github.com/source
 
 #### Binaries
 
-- **darwin** [386](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-darwin-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-darwin-amd64)
-- **freebsd** [386](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-freebsd-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-freebsd-amd64)
-- **linux** [386](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-linux-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-linux-amd64) / [arm](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-linux-arm) / [arm64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-linux-arm64)
-- **solaris** [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-solaris-amd64)
-- **windows** [386](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-windows-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-windows-amd64)
+- **linux** [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-linux-amd64)
 
 #### Via Go
 
@@ -36,8 +32,6 @@ upmail - v0.1.1
     	Mailgun API Key to use for sending email (optional)
   -mailgun-domain string
     	Mailgun Domain to use for sending email (optional)
-  -mandrill string
-    	Mandrill API Key to use for sending email (optional)
   -password string
     	SMTP server password
   -recipient string

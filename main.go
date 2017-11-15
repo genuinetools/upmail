@@ -36,8 +36,6 @@ var (
 	mailgunAPIKey string
 	mailgunDomain string
 
-	mandrillAPIKey string
-
 	smtpServer   string
 	smtpSender   string
 	smtpUsername string
@@ -57,8 +55,6 @@ func init() {
 
 	flag.StringVar(&mailgunAPIKey, "mailgun", "", "Mailgun API Key to use for sending email (optional)")
 	flag.StringVar(&mailgunDomain, "mailgun-domain", "", "Mailgun Domain to use for sending email (optional)")
-
-	flag.StringVar(&mandrillAPIKey, "mandrill", "", "Mandrill API Key to use for sending email (optional)")
 
 	flag.StringVar(&smtpServer, "server", "", "SMTP server for email notifications")
 	flag.StringVar(&smtpSender, "sender", "", "SMTP default sender email address for email notifications")
@@ -92,8 +88,8 @@ func init() {
 	if recipient == "" {
 		usageAndExit("Recipient cannot be empty.", 1)
 	}
-	if smtpServer == "" && mandrillAPIKey == "" && mailgunAPIKey == "" && mailgunDomain == "" {
-		usageAndExit("SMTP server OR Mailgun API Key OR  Mandrill API Key cannot be empty.", 1)
+	if smtpServer == "" && mailgunAPIKey == "" && mailgunDomain == "" {
+		usageAndExit("SMTP server OR Mailgun API Key cannot be empty.", 1)
 	}
 }
 
@@ -123,12 +119,11 @@ func main() {
 	}
 
 	n := email.Notifier{
-		MailgunAPIKey:  mailgunAPIKey,
-		MailgunDomain:  mailgunDomain,
-		MandrillAPIKey: mandrillAPIKey,
-		Recipient:      recipient,
-		Server:         smtpServer,
-		Sender:         smtpSender,
+		MailgunAPIKey: mailgunAPIKey,
+		MailgunDomain: mailgunDomain,
+		Recipient:     recipient,
+		Server:        smtpServer,
+		Sender:        smtpSender,
 		Auth: smtp.PlainAuth(
 			"",
 			smtpUsername,

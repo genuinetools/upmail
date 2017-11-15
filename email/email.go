@@ -7,7 +7,6 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	mailgun "github.com/mailgun/mailgun-go"
-	"github.com/mattbaird/gochimp"
 	"github.com/sourcegraph/checkup"
 )
 
@@ -17,8 +16,6 @@ type Notifier struct {
 	MailgunAPIKey string
 	// MailgunDomain stores the domain for Mailgun if configured.
 	MailgunDomain string
-	// MandrillAPIKey stores the API for Mandrill if configured.
-	MandrillAPIKey string
 	// Recipient is the email address to send the notification to.
 	Recipient string
 	// Server is the email server.
@@ -60,29 +57,6 @@ func (n Notifier) sendEmail(result checkup.Result) error {
 			return fmt.Errorf("Sending Mailgun message failed: response: %#v error: %v", msg, err)
 		}
 		logrus.Infof("Mailgun send message succeeded: %#v", msg)
-		return nil
-	}
-
-	if n.MandrillAPIKey != "" {
-		mandrillAPI, err := gochimp.NewMandrill(n.MandrillAPIKey)
-		if err != nil {
-			return fmt.Errorf("Initializing Mandrill API failed: %v", err)
-		}
-
-		message := gochimp.Message{
-			Text:      fmt.Sprintf("Time: %s\n\n%s", time.Now().Format(time.UnixDate), result.String()),
-			Subject:   fmt.Sprintf("[UPMAIL]: %s %s", result.Title, result.Status()),
-			FromEmail: n.Sender,
-			FromName:  n.Sender,
-			To: []gochimp.Recipient{
-				{Email: n.Recipient},
-			},
-		}
-		resp, err := mandrillAPI.MessageSend(message, false)
-		if err != nil {
-			return fmt.Errorf("Sending Mandrill message failed: response: %#v error: %v", resp, err)
-		}
-		logrus.Infof("Mandrill send message succeeded: %#v", resp)
 		return nil
 	}
 

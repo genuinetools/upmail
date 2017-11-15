@@ -17,7 +17,7 @@ import (
 type CastFunc func(string, interface{}, interface{}) (interface{}, error)
 type ActionFunc func(*Rule, string, []string, *int) error
 type StoreFunc func(interface{})
-type CommandFunc func(*ArgParser, interface{}) int
+type CommandFunc func(*ArgParser, interface{}) (int, error)
 
 const (
 	IsCommand int64 = 1 << iota
@@ -29,6 +29,8 @@ const (
 	IsFormated
 	IsGreedy
 	NoValue
+	DefaultValue
+	EnvValue
 	Seen
 )
 
@@ -49,7 +51,6 @@ type Rule struct {
 	CommandFunc CommandFunc
 	Group       string
 	Key         string
-	BackendKey  string
 	NotGreedy   bool
 	Flags       int64
 }
@@ -162,16 +163,12 @@ func (self *Rule) Match(args []string, idx *int) (bool, error) {
 	}
 
 	// If we get here, this argument is associated with either an option value or an positional argument
-	value, err := self.Cast(name, self.Value, self.UnEscape(args[*idx]))
+	value, err := self.Cast(name, self.Value, args[*idx])
 	if err != nil {
 		return true, err
 	}
 	self.Value = value
 	return true, nil
-}
-
-func (self *Rule) UnEscape(str string) string {
-	return strings.Replace(str, "\\", "", -1)
 }
 
 // Returns the appropriate required warning to display to the user
@@ -203,6 +200,7 @@ func (self *Rule) ComputedValue(values *Options) (interface{}, error) {
 	}
 
 	if value != nil {
+		self.SetFlag(EnvValue)
 		return value, nil
 	}
 
@@ -222,6 +220,7 @@ func (self *Rule) ComputedValue(values *Options) (interface{}, error) {
 
 	// Apply default if available
 	if self.Default != nil {
+		self.SetFlag(DefaultValue)
 		return self.Cast(self.Name, self.Value, *self.Default)
 	}
 
@@ -252,19 +251,24 @@ func (self *Rule) GetEnvValue() (interface{}, error) {
 	return nil, nil
 }
 
-func (self *Rule) BackendKeyPath(rootPath string) string {
-	rootPath = strings.TrimPrefix(rootPath, "/")
-	if self.Key == "" {
-		self.Key = self.Name
+func (self *Rule) BackendKey(rootPath string) string {
+	// Do this so users are not surprised root isn't prefixed with "/"
+	rootPath = "/" + strings.TrimPrefix(rootPath, "/")
+	// If the user provided their own key used that instead
+	if self.Key != "" {
+		return path.Join("/", rootPath, self.Key)
 	}
 
 	if self.HasFlag(IsConfigGroup) {
 		return path.Join("/", rootPath, self.Group)
 	}
+
+	// This might cause a key collision if a group shares the same name as an argument
+	// This can be avoided by assigning a custom key name to the group or argument.
 	if self.Group == DefaultOptionGroup {
-		return path.Join("/", rootPath, "DEFAULT", self.Key)
+		return path.Join("/", rootPath, self.Name)
 	}
-	return path.Join("/", rootPath, self.Group, self.Key)
+	return path.Join("/", rootPath, self.Group, self.Name)
 }
 
 // ***********************************************

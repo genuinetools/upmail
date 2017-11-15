@@ -2,12 +2,10 @@ package args
 
 import (
 	"path"
-	"strings"
 	"sync"
 	"time"
 
 	"github.com/pkg/errors"
-
 	"golang.org/x/net/context"
 )
 
@@ -60,9 +58,6 @@ type Backend interface {
 
 func (self *ArgParser) FromBackend(backend Backend) (*Options, error) {
 
-	// Build the rules keys
-	self.buildBackendKeys(backend.GetRootKey())
-
 	options, err := self.ParseBackend(backend)
 	if err != nil {
 		return options, err
@@ -78,10 +73,11 @@ func (self *ArgParser) ParseBackend(backend Backend) (*Options, error) {
 	defer func() { cancel() }()
 	//
 	for _, rule := range self.rules {
+		key := rule.BackendKey(backend.GetRootKey())
 		if rule.HasFlag(IsConfigGroup) {
-			pairs, err := backend.List(ctx, rule.BackendKey)
+			pairs, err := backend.List(ctx, key)
 			if err != nil {
-				self.info("args.FromStore().List() fetching '%s' - '%s'", rule.BackendKey, err.Error())
+				self.info("args.FromStore().List() fetching '%s' - '%s'", key, err.Error())
 				continue
 			}
 			// Iterate through all the key=values for this group
@@ -90,9 +86,9 @@ func (self *ArgParser) ParseBackend(backend Backend) (*Options, error) {
 			}
 			continue
 		}
-		pair, err := backend.Get(ctx, rule.BackendKey)
+		pair, err := backend.Get(ctx, key)
 		if err != nil {
-			self.info("args.ParseEtcd(): Failed to fetch key '%s' - %s", rule.BackendKey, err.Error())
+			self.info("args.ParseBackend(): Failed to fetch key '%s' - %s", key, err.Error())
 			continue
 		}
 		values.Group(rule.Group).Set(rule.Name, string(pair.Value))
@@ -100,36 +96,23 @@ func (self *ArgParser) ParseBackend(backend Backend) (*Options, error) {
 	return values, nil
 }
 
-func (self *ArgParser) matchBackendRule(key string) *Rule {
+func (self *ArgParser) matchBackendRule(key string, backend Backend) *Rule {
 	for _, rule := range self.rules {
 		comparePath := key
 		if rule.HasFlag(IsConfigGroup) {
 			comparePath = path.Dir(key)
 		}
-		if comparePath == rule.BackendKey {
+		if comparePath == rule.BackendKey(backend.GetRootKey()) {
 			return rule
 		}
 	}
 	return nil
 }
 
-// Generate rule.EtcdPath for all rules using the parsers set EtcRoot
-func (self *ArgParser) buildBackendKeys(root string) {
-	for _, rule := range self.rules {
-		// Do this so users are not surprised root isn't prefixed with "/"
-		root = "/" + strings.TrimPrefix(root, "/")
-		// Build the full etcd key path
-		rule.BackendKey = rule.BackendKeyPath(root)
-	}
-}
-
 func (self *ArgParser) Watch(backend Backend, callBack func(*ChangeEvent, error)) WatchCancelFunc {
 	var isRunning sync.WaitGroup
 	var once sync.Once
 	done := make(chan struct{})
-
-	// Build the rules keys
-	self.buildBackendKeys(backend.GetRootKey())
 
 	isRunning.Add(1)
 	go func() {
@@ -152,7 +135,7 @@ func (self *ArgParser) Watch(backend Backend, callBack func(*ChangeEvent, error)
 						goto Retry
 					}
 
-					rule := self.matchBackendRule(event.Key)
+					rule := self.matchBackendRule(event.Key, backend)
 					if rule != nil {
 						event.SetRule(rule)
 					}

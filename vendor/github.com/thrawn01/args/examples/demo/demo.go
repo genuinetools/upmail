@@ -85,10 +85,10 @@ func main() {
 	db.AddConfig("pass").Help("database password")
 
 	// Pass our own argument list, or nil to parse os.Args[]
-	opt := parser.ParseArgsSimple(nil)
+	opt := parser.ParseOrExit(nil)
 
-	// NOTE: ParseArgsSimple() is just a convenience, you can call
-	// parser.ParseArgs(nil) directly and handle the errors
+	// NOTE: ParseOrExit() is just a convenience, you can call
+	// parser.Parse(nil) directly and handle the errors
 	// yourself if you have more complicated use case
 
 	// Demo default variables in a struct
@@ -98,13 +98,6 @@ func main() {
 	fmt.Printf("DbHost       '%s'\n", conf.DbHost)
 	fmt.Printf("TheAnswer    '%d'\n", conf.TheAnswer)
 	fmt.Println("")
-
-	// If user asked for --help or there were no options
-	// passed and none where required
-	if opt.NoArgs() || opt.Bool("help") {
-		parser.PrintHelp()
-		os.Exit(-1)
-	}
 
 	fmt.Println("")
 	fmt.Println("==================")

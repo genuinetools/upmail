@@ -25,37 +25,7 @@
       secure: "cd6jTZ8KUYvRmyYclBiuypChOX9yCgt9NyOfJIQu9J1UjqnvjvLtB4dmS/yuTX3ZDMsOo075C95qVG/WjlDLDrUI5Ffbv8zzigAg2A0xvOeq4Zva1abg8A+yQaaXNrKCnzjuiQLE/QT/WvOXzwrm878KYImhfCd0aXb9JFXVLVZYZBdDAJO2mNBXv4NKGjMKD3l43f3kD0q+cw1DbDxR4/EpkWeBPLGzW/9xHnqnkJdD/LLQKvwZEEzExcvvI9wGbKtGdZElvKAVMwTXMwLBpVcwXIXWQNEQ+EBqLDRmfillI1esl2hSakle4WPhfdjeii/RGuiEleC1yjmQ3ftvLaGKNyh8bsY/Ine7gizSVm368ghedRaHfCQawsG02m8XCitnic+kfNfviygNPwid9hSYxTLwXYEr9q2fVIobikoaBe6LxFM1qjSnqvCL25unI1dS5Qf6ZuP7Zi7EPxcwonApX3yJJyALS9wdu9A2GJVNuIwucNXh+UIX0CZPaPNNW/PKiDSAg+igOLGAua7on6rSjSLtzBJIhU4mQIWIHNc3G+vLK+CtswNw80ITItWfH/ZaiiO279V5oLEBVBaUAP2d5Ut/YaDilDfrIcxRIi3lyyXieFEkjzNxKr2jrRODWPoeulbO6/EeZpd8VieDUYAWhyMxYlu99aE2oYzbkwo="
     file:
       - cross/upmail-linux-amd64.md5
-      - cross/upmail-windows-386.sha256
-      - cross/upmail-linux-arm
-      - cross/upmail-darwin-amd64.md5
-      - cross/upmail-darwin-amd64
-      - cross/upmail-solaris-amd64.md5
-      - cross/upmail-linux-arm64.sha256
-      - cross/upmail-linux-arm.sha256
-      - cross/upmail-linux-386.sha256
-      - cross/upmail-darwin-386.md5
-      - cross/upmail-windows-386.md5
-      - cross/upmail-freebsd-amd64.md5
-      - cross/upmail-linux-arm64.md5
-      - cross/upmail-linux-arm64
-      - cross/upmail-freebsd-amd64.sha256
-      - cross/upmail-freebsd-386.md5
       - cross/upmail-linux-amd64.sha256
-      - cross/upmail-linux-386.md5
-      - cross/upmail-freebsd-386
-      - cross/upmail-solaris-amd64.sha256
-      - cross/upmail-windows-amd64
-      - cross/upmail-windows-amd64.md5
-      - cross/upmail-windows-amd64.sha256
-      - cross/upmail-linux-arm.md5
-      - cross/upmail-darwin-386.sha256
-      - cross/upmail-darwin-amd64.sha256
-      - cross/upmail-windows-386
-      - cross/upmail-solaris-amd64
-      - cross/upmail-darwin-386
-      - cross/upmail-linux-386
-      - cross/upmail-freebsd-amd64
-      - cross/upmail-freebsd-386.sha256
       - cross/upmail-linux-amd64
     skip_cleanup: true
     on:

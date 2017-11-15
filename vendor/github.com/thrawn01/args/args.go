@@ -8,7 +8,6 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	"text/scanner"
 )
 
 const (
@@ -64,7 +63,7 @@ func EnvPrefix(prefix string) ParseModifier {
 
 func NoHelp() ParseModifier {
 	return func(parser *ArgParser) {
-		parser.addHelp = false
+		parser.AddHelpOption = false
 	}
 }
 
@@ -255,15 +254,28 @@ func castStringSlice(name string, dest interface{}, value interface{}) (interfac
 	}
 
 	// Assume the value must be a parsable string
-	strValue := value.(string)
+	return append(dest.([]string), StringToSlice(value.(string), strings.TrimSpace)...), nil
+}
 
-	// If no comma is found, then assume this is a single value
-	if strings.Index(strValue, ",") == -1 {
-		return append(dest.([]string), strValue), nil
+// Given a comma separated string, return a slice of string items.
+// Return the entire string as the first item if no comma is found.
+//	// Returns []string{"one"}
+// 	result := args.StringToSlice("one")
+//
+//	// Returns []string{"one", "two", "three"}
+// 	result := args.StringToSlice("one, two, three", strings.TrimSpace)
+//
+//	// Returns []string{"ONE", "TWO", "THREE"}
+// 	result := args.StringToSlice("one, two, three", strings.ToUpper, strings.TrimSpace)
+func StringToSlice(value string, modifiers ...func(s string) string) []string {
+	result := strings.Split(value, ",")
+	// Apply the modifiers
+	for _, modifier := range modifiers {
+		for idx, item := range result {
+			result[idx] = modifier(item)
+		}
 	}
-
-	// Split the values separated by comma's
-	return append(dest.([]string), strings.Split(strValue, ",")...), nil
+	return result
 }
 
 func mergeStringMap(src, dest map[string]string) map[string]string {
@@ -289,6 +301,11 @@ func castStringMap(name string, dest interface{}, value interface{}) (interface{
 	// If our destination is nil, init a new slice
 	if dest == nil {
 		dest = make(map[string]string, 0)
+	}
+
+	// Don't attempt to cast a nil value
+	if value == nil {
+		return nil, nil
 	}
 
 	// could already be a map[string]string
@@ -341,43 +358,35 @@ func JSONToMap(value string) (map[string]string, error) {
 }
 
 func StringToMap(value string) (map[string]string, error) {
-	var tokenizer scanner.Scanner
-	tokenizer.Init(strings.NewReader(value))
-	tokenizer.Error = func(*scanner.Scanner, string) {}
-
+	tokenizer := NewKeyValueTokenizer(value)
 	result := make(map[string]string)
-	next := func() string {
-		tokenizer.Scan()
-		return tokenizer.TokenText()
-	}
 
 	var lvalue, rvalue, expression string
 	for {
-		lvalue = next()
+		lvalue = tokenizer.Next()
 		if lvalue == "" {
 			return result, errors.New(fmt.Sprintf("Expected key at pos '%d' but found none; "+
-				"map values should be 'key=value' separated by commas", tokenizer.Pos().Offset))
+				"map values should be 'key=value' separated by commas", tokenizer.Pos))
 		}
-		if lvalue == "{" {
+		if strings.HasPrefix(lvalue, "{") {
 			// Assume this is JSON format and attempt to un-marshal
 			return JSONToMap(value)
 		}
 
-		expression = next()
+		expression = tokenizer.Next()
 		if expression != "=" {
 			return result, errors.New(fmt.Sprintf("Expected '=' after '%s' but found '%s'; "+
 				"map values should be 'key=value' separated by commas", lvalue, expression))
 		}
-		rvalue = next()
+		rvalue = tokenizer.Next()
 		if rvalue == "" {
 			return result, errors.New(fmt.Sprintf("Expected value after '%s' but found none; "+
 				"map values should be 'key=value' separated by commas", expression))
 		}
-		// TODO: Handle quoted strings and escaped double quotes
 		result[lvalue] = rvalue
 
 		// Are there anymore tokens?
-		delimiter := next()
+		delimiter := tokenizer.Next()
 		if delimiter == "" {
 			break
 		}
@@ -388,17 +397,22 @@ func StringToMap(value string) (map[string]string, error) {
 				"map values should be 'key=value' separated by commas", rvalue, delimiter))
 		}
 	}
-
 	return result, nil
 }
 
 // Returns true if the error was because help message was printed
-func AskedForHelp(err error) bool {
-	obj, ok := err.(HelpErrorInterface)
+func IsHelpError(err error) bool {
+	obj, ok := err.(isHelpError)
 	return ok && obj.IsHelpError()
 }
 
-type HelpErrorInterface interface {
+// Returns true if the error was because help message was printed
+func AskedForHelp(err error) bool {
+	obj, ok := err.(isHelpError)
+	return ok && obj.IsHelpError()
+}
+
+type isHelpError interface {
 	IsHelpError() bool
 }
 
