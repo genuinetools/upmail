@@ -8,11 +8,11 @@ Provides email notifications for [sourcegraph/checkup](https://github.com/source
 
 #### Binaries
 
-- **darwin** [386](https://github.com/jessfraz/upmail/releases/download/v0.1.0/upmail-darwin-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.0/upmail-darwin-amd64)
-- **freebsd** [386](https://github.com/jessfraz/upmail/releases/download/v0.1.0/upmail-freebsd-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.0/upmail-freebsd-amd64)
-- **linux** [386](https://github.com/jessfraz/upmail/releases/download/v0.1.0/upmail-linux-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.0/upmail-linux-amd64) / [arm](https://github.com/jessfraz/upmail/releases/download/v0.1.0/upmail-linux-arm) / [arm64](https://github.com/jessfraz/upmail/releases/download/v0.1.0/upmail-linux-arm64)
-- **solaris** [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.0/upmail-solaris-amd64)
-- **windows** [386](https://github.com/jessfraz/upmail/releases/download/v0.1.0/upmail-windows-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.0/upmail-windows-amd64)
+- **darwin** [386](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-darwin-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-darwin-amd64)
+- **freebsd** [386](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-freebsd-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-freebsd-amd64)
+- **linux** [386](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-linux-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-linux-amd64) / [arm](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-linux-arm) / [arm64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-linux-arm64)
+- **solaris** [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-solaris-amd64)
+- **windows** [386](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-windows-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.1/upmail-windows-amd64)
 
 #### Via Go
 
@@ -24,7 +24,7 @@ $ go get github.com/jessfraz/upmail
 
 ```console
 $ upmail -h
-upmail - v0.1.0
+upmail - v0.1.1
   -appengine
     	enable the server for running in Google App Engine
   -config string
