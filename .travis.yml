@@ -4,6 +4,7 @@
   notifications:
     email: true
   go:
+    - 1.7.x
     - 1.8.x
     - 1.9.x
     - tip
@@ -12,9 +13,11 @@
       - GO15VENDOREXPERIMENT=1
   install:
     - go get github.com/golang/lint/golint
+    - go get honnef.co/go/tools/cmd/staticcheck
   script:
     - go build -v
     - go vet $(go list ./... | grep -v vendor)
+    - staticcheck $(go list ./... | grep -v vendor)
     - test -z "$(golint ./... | grep -v vendor | tee /dev/stderr)"
     - test -z "$(gofmt -s -l . | grep -v vendor | tee /dev/stderr)"
     - go test $(go list ./... | grep -v vendor)
@@ -22,12 +25,42 @@
   deploy:
     provider: releases
     api_key:
-      secure: "cd6jTZ8KUYvRmyYclBiuypChOX9yCgt9NyOfJIQu9J1UjqnvjvLtB4dmS/yuTX3ZDMsOo075C95qVG/WjlDLDrUI5Ffbv8zzigAg2A0xvOeq4Zva1abg8A+yQaaXNrKCnzjuiQLE/QT/WvOXzwrm878KYImhfCd0aXb9JFXVLVZYZBdDAJO2mNBXv4NKGjMKD3l43f3kD0q+cw1DbDxR4/EpkWeBPLGzW/9xHnqnkJdD/LLQKvwZEEzExcvvI9wGbKtGdZElvKAVMwTXMwLBpVcwXIXWQNEQ+EBqLDRmfillI1esl2hSakle4WPhfdjeii/RGuiEleC1yjmQ3ftvLaGKNyh8bsY/Ine7gizSVm368ghedRaHfCQawsG02m8XCitnic+kfNfviygNPwid9hSYxTLwXYEr9q2fVIobikoaBe6LxFM1qjSnqvCL25unI1dS5Qf6ZuP7Zi7EPxcwonApX3yJJyALS9wdu9A2GJVNuIwucNXh+UIX0CZPaPNNW/PKiDSAg+igOLGAua7on6rSjSLtzBJIhU4mQIWIHNc3G+vLK+CtswNw80ITItWfH/ZaiiO279V5oLEBVBaUAP2d5Ut/YaDilDfrIcxRIi3lyyXieFEkjzNxKr2jrRODWPoeulbO6/EeZpd8VieDUYAWhyMxYlu99aE2oYzbkwo="
+      secure: "W1O/X7BULejp9hVuqGL621eAzuvBk49Zki6YHprxmagkgdF2VR+puFxgnnrRwsH8U2Xp1pHTKhKo6+8rZb0goGlS1RnG188X/I/DKJV/YyXeRH1lnMuKle55rF28fFcexUPMHSrkAp4hqQISAIva7TkPfL4Cg0I6mcv2kxETsN9LTDO+b7uAzurwLO6rCSw44NAqYsdiUcG5rVvbA69diHFTi+CTb6WhkQs+uCp+OPanznhMGoipccu3+YOs2L3Lvf81FvWGnABwp07CzukTQ9L+zw1RjNlfApK79nbxud0S3oaDdt5sZETy6RxVLkMyDlSUTbX2qrHaKsuU9qC9Ferghk/gQkYQEdPJ27C63p17VaOjiIxChncm5cN1dwPHw2iLzzltmusMyyJG9U0mgcLhxkdQY9zCE3NhWOvssDHRZW6I5Ti/gMCpyFQDpJUawwFNk149s8AZI8YK0GqUgrvrGuvCrjsCB7o6fszFRyKirvfwXPZXSZqQFLBNMZfr1nEVk4OKBRW05WQZOQruKzNeeC3+Ahvw7Ne5U+FIEq6Ri+DlmK9p26+o5AVWEAwSyGd1+aYEJ5baq0/yZy5TdDtAf548FkCCk7M3mM0IA/2M1NoLul0q7/v9YyYz/6y/ZybMmUq9uE/B7HaNyDtMzpgqpH8nX2F+OKaNjpJPHv0="
     file:
       - cross/upmail-linux-amd64.md5
+      - cross/upmail-windows-386.sha256
+      - cross/upmail-linux-arm
+      - cross/upmail-darwin-amd64.md5
+      - cross/upmail-darwin-amd64
+      - cross/upmail-solaris-amd64.md5
+      - cross/upmail-linux-arm64.sha256
+      - cross/upmail-linux-arm.sha256
+      - cross/upmail-linux-386.sha256
+      - cross/upmail-darwin-386.md5
+      - cross/upmail-windows-386.md5
+      - cross/upmail-freebsd-amd64.md5
+      - cross/upmail-linux-arm64.md5
+      - cross/upmail-linux-arm64
+      - cross/upmail-freebsd-amd64.sha256
+      - cross/upmail-freebsd-386.md5
       - cross/upmail-linux-amd64.sha256
+      - cross/upmail-linux-386.md5
+      - cross/upmail-freebsd-386
+      - cross/upmail-solaris-amd64.sha256
+      - cross/upmail-windows-amd64
+      - cross/upmail-windows-amd64.md5
+      - cross/upmail-windows-amd64.sha256
+      - cross/upmail-linux-arm.md5
+      - cross/upmail-darwin-386.sha256
+      - cross/upmail-darwin-amd64.sha256
+      - cross/upmail-windows-386
+      - cross/upmail-solaris-amd64
+      - cross/upmail-darwin-386
+      - cross/upmail-linux-386
+      - cross/upmail-freebsd-amd64
+      - cross/upmail-freebsd-386.sha256
       - cross/upmail-linux-amd64
     skip_cleanup: true
     on:
-      go: 1.9.x
+      go: tip
       tags: true

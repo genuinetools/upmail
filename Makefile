@@ -24,8 +24,9 @@ GO_LDFLAGS=-ldflags "-w $(CTIMEVAR)"
 GO_LDFLAGS_STATIC=-ldflags "-w $(CTIMEVAR) -extldflags -static"
 
 # List the GOOS and GOARCH to build
-GOOSARCHES = linux/amd64
-all: clean build fmt lint test vet install ## Runs a clean, build, fmt, lint, test, vet and install
+GOOSARCHES = darwin/amd64 darwin/386 freebsd/amd64 freebsd/386 linux/arm linux/arm64 linux/amd64 linux/386 solaris/amd64 windows/amd64 windows/386
+
+all: clean build fmt lint test staticcheck vet install ## Runs a clean, build, fmt, lint, test, staticcheck, vet and install
 
 .PHONY: build
 build: $(NAME) ## Builds a dynamic executable or package
@@ -37,7 +38,7 @@ $(NAME): *.go VERSION
 .PHONY: static
 static: ## Builds a static executable
 	@echo "+ $@"
-	CGO_ENABLED=1 go build \
+	CGO_ENABLED=0 go build \
 				-tags "$(BUILDTAGS) static_build" \
 				${GO_LDFLAGS_STATIC} -o $(NAME) .
 
@@ -61,6 +62,11 @@ vet: ## Verifies `go vet` passes
 	@echo "+ $@"
 	@go vet $(shell go list ./... | grep -v vendor) | grep -v '.pb.go:' | tee /dev/stderr
 
+.PHONY: staticcheck
+staticcheck: ## Verifies `staticcheck` passes
+	@echo "+ $@"
+	@staticcheck $(shell go list ./... | grep -v vendor) | grep -v '.pb.go:' | tee /dev/stderr
+
 .PHONY: install
 install: ## Installs the executable or package
 	@echo "+ $@"
@@ -68,10 +74,10 @@ install: ## Installs the executable or package
 
 define buildpretty
 mkdir -p $(BUILDDIR)/$(1)/$(2);
-GOOS=$(1) GOARCH=$(2) CGO_ENABLED=1 go build \
+GOOS=$(1) GOARCH=$(2) CGO_ENABLED=0 go build \
 	 -o $(BUILDDIR)/$(1)/$(2)/$(NAME) \
-	 -a -tags "$(BUILDTAGS)" \
-	 ${GO_LDFLAGS} .;
+	 -a -tags "$(BUILDTAGS) static_build netgo" \
+	 -installsuffix netgo ${GO_LDFLAGS_STATIC} .;
 md5sum $(BUILDDIR)/$(1)/$(2)/$(NAME) > $(BUILDDIR)/$(1)/$(2)/$(NAME).md5;
 sha256sum $(BUILDDIR)/$(1)/$(2)/$(NAME) > $(BUILDDIR)/$(1)/$(2)/$(NAME).sha256;
 endef
@@ -82,10 +88,10 @@ cross: *.go VERSION ## Builds the cross-compiled binaries, creating a clean dire
 	$(foreach GOOSARCH,$(GOOSARCHES), $(call buildpretty,$(subst /,,$(dir $(GOOSARCH))),$(notdir $(GOOSARCH))))
 
 define buildrelease
-GOOS=$(1) GOARCH=$(2) CGO_ENABLED=1 go build \
+GOOS=$(1) GOARCH=$(2) CGO_ENABLED=0 go build \
 	 -o $(BUILDDIR)/$(NAME)-$(1)-$(2) \
-	 -a -tags "$(BUILDTAGS)" \
-	 ${GO_LDFLAGS} .;
+	 -a -tags "$(BUILDTAGS) static_build netgo" \
+	 -installsuffix netgo ${GO_LDFLAGS_STATIC} .;
 md5sum $(BUILDDIR)/$(NAME)-$(1)-$(2) > $(BUILDDIR)/$(NAME)-$(1)-$(2).md5;
 sha256sum $(BUILDDIR)/$(NAME)-$(1)-$(2) > $(BUILDDIR)/$(NAME)-$(1)-$(2).sha256;
 endef
