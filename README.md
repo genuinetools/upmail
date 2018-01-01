@@ -8,7 +8,7 @@ Provides email notifications for [sourcegraph/checkup](https://github.com/source
 
 #### Binaries
 
-- **linux** [amd64](https://github.com/jessfraz/upmail/releases/download/v0.1.2/upmail-linux-amd64)
+- **linux** [amd64](https://github.com/jessfraz/upmail/releases/download/v0.2.0/upmail-linux-amd64)
 
 #### Via Go
 
@@ -28,7 +28,7 @@ $ upmail -h
       |_|
 
  Email notification hook for https://github.com/sourcegraph/checkup.
- Version: v0.1.2
+ Version: v0.2.0
  Build: 640385f
 
   -appengine
