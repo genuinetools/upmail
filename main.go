@@ -23,7 +23,18 @@ import (
 
 const (
 	// BANNER is what is printed for help/info output
-	BANNER = "upmail - %s\n"
+	BANNER = `                             _ _
+ _   _ _ __  _ __ ___   __ _(_) |
+| | | | '_ \| '_ ` + "`" + ` _ \ / _` + "`" + ` | | |
+| |_| | |_) | | | | | | (_| | | |
+ \__,_| .__/|_| |_| |_|\__,_|_|_|
+      |_|
+
+ Email notification hook for https://github.com/sourcegraph/checkup.
+ Version: %s
+ Build: %s
+
+`
 )
 
 var (
@@ -66,7 +77,7 @@ func init() {
 	flag.BoolVar(&debug, "d", false, "run in debug mode")
 
 	flag.Usage = func() {
-		fmt.Fprint(os.Stderr, fmt.Sprintf(BANNER, version.VERSION))
+		fmt.Fprint(os.Stderr, fmt.Sprintf(BANNER, version.VERSION, version.GITCOMMIT))
 		flag.PrintDefaults()
 	}
 

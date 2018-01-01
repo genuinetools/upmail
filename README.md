@@ -20,29 +20,39 @@ $ go get github.com/jessfraz/upmail
 
 ```console
 $ upmail -h
-upmail - v0.1.2
+                             _ _
+ _   _ _ __  _ __ ___   __ _(_) |
+| | | | '_ \| '_ ` _ \ / _` | | |
+| |_| | |_) | | | | | | (_| | | |
+ \__,_| .__/|_| |_| |_|\__,_|_|_|
+      |_|
+
+ Email notification hook for https://github.com/sourcegraph/checkup.
+ Version: v0.1.2
+ Build: 640385f
+
   -appengine
-    	enable the server for running in Google App Engine
+        enable the server for running in Google App Engine
   -config string
-    	config file location (default "checkup.json")
-  -d	run in debug mode
+        config file location (default "checkup.json")
+  -d    run in debug mode
   -interval string
-    	check interval (ex. 5ms, 10s, 1m, 3h) (default "10m")
+        check interval (ex. 5ms, 10s, 1m, 3h) (default "10m")
   -mailgun string
-    	Mailgun API Key to use for sending email (optional)
+        Mailgun API Key to use for sending email (optional)
   -mailgun-domain string
-    	Mailgun Domain to use for sending email (optional)
+        Mailgun Domain to use for sending email (optional)
   -password string
-    	SMTP server password
+        SMTP server password
   -recipient string
-    	recipient for email notifications
+        recipient for email notifications
   -sender string
-    	SMTP default sender email address for email notifications
+        SMTP default sender email address for email notifications
   -server string
-    	SMTP server for email notifications
+        SMTP server for email notifications
   -username string
-    	SMTP server username
-  -v	print version and exit (shorthand)
+        SMTP server username
+  -v    print version and exit (shorthand)
   -version
-    	print version and exit
+        print version and exit
 ```
