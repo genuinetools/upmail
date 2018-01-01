@@ -5,8 +5,8 @@ import (
 	"net/smtp"
 	"time"
 
-	"github.com/Sirupsen/logrus"
 	mailgun "github.com/mailgun/mailgun-go"
+	"github.com/sirupsen/logrus"
 	"github.com/sourcegraph/checkup"
 )
 

@@ -15,9 +15,9 @@ import (
 
 	"google.golang.org/appengine"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/jessfraz/upmail/email"
 	"github.com/jessfraz/upmail/version"
+	"github.com/sirupsen/logrus"
 	"github.com/sourcegraph/checkup"
 )
 
@@ -136,7 +136,7 @@ func main() {
 	// parse the duration
 	dur, err := time.ParseDuration(interval)
 	if err != nil {
-		logrus.Fatalf("parsing %s as duration failed: %v", interval, err)
+		logrus.Fatalf("Parsing %s as duration failed: %v", interval, err)
 	}
 
 	logrus.Infof("Starting checks that will send emails to: %s", recipient)
@@ -149,12 +149,12 @@ func main() {
 
 	logrus.Info("Performing initial check")
 	if err := c.CheckAndStore(); err != nil {
-		logrus.Fatalf("check failed: %v", err)
+		logrus.Fatalf("CheckAndStore failed: %v", err)
 	}
 
 	for range ticker.C {
 		if err := c.CheckAndStore(); err != nil {
-			logrus.Warnf("check failed: %v", err)
+			logrus.Warnf("CheckAndStore failed: %v", err)
 		}
 	}
 }

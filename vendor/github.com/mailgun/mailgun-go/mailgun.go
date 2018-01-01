@@ -161,8 +161,6 @@ type Mailgun interface {
 	GetSingleComplaint(address string) (Complaint, error)
 	GetStoredMessage(id string) (StoredMessage, error)
 	GetStoredMessageRaw(id string) (StoredMessageRaw, error)
-	GetStoredMessageForURL(url string) (StoredMessage, error)
-	GetStoredMessageRawForURL(url string) (StoredMessageRaw, error)
 	DeleteStoredMessage(id string) error
 	GetCredentials(limit, skip int) (int, []Credential, error)
 	CreateCredential(login, password string) error
@@ -291,11 +289,6 @@ func (m *MailgunImpl) SetAPIBase(address string) {
 // generateApiUrl renders a URL for an API endpoint using the domain and endpoint name.
 func generateApiUrl(m Mailgun, endpoint string) string {
 	return fmt.Sprintf("%s/%s/%s", m.ApiBase(), m.Domain(), endpoint)
-}
-
-// generateApiUrlWithDomain renders a URL for an API endpoint using a separate domain and endpoint name.
-func generateApiUrlWithDomain(m Mailgun, endpoint, domain string) string {
-	return fmt.Sprintf("%s/%s/%s", m.ApiBase(), domain, endpoint)
 }
 
 // generateMemberApiUrl renders a URL relevant for specifying mailing list members.
