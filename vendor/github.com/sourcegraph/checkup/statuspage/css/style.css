@@ -1,0 +1,338 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 16px;
+}
+
+header {
+	margin-bottom: 20px;
+	box-shadow: 0 2px 100px rgba(0, 0, 0, .15);
+	transition: background-color 2s ease;
+	border-bottom: 1px solid #FFF;
+}
+
+main {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding: 0 15px;
+}
+
+#chart-grid {
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	width: 75%;
+}
+
+.chart-50  { width: 50%; }
+.chart-100 { width: 100%; }
+
+#overall-status-text {
+	padding: 50px 10px 10px 10px;
+	color: #FFF;
+}
+
+#overall-status.green  { background-color: #40D24C; }
+#overall-status.yellow { background-color: #D2C640; }
+#overall-status.red    { background-color: #D24040; }
+#overall-status.gray   { background-color: #B8B8B8; }
+
+#overall-status-text {
+	font: bold 42px 'Source Sans Pro', sans-serif;
+	text-transform: uppercase;
+	text-align: center;
+	line-height: 1em;
+}
+
+.infobar {
+	font-size: 12px;
+	font-family: sans-serif;
+	padding: 10px;
+	background: rgba(255, 255, 255, .8);
+}
+
+.infobar .item {
+	display: inline-block;
+	margin-right: 2em;
+}
+
+#timeline {
+	width: 25%;
+	position: relative;
+	z-index: 1;
+}
+
+#timeline > div {
+	position: relative;
+	z-index: 2;
+	margin: 2em 0;
+}
+
+#timeline > div:first-child {
+	margin-top: 0;
+}
+
+#timeline .message {
+	font-size: 14px;
+	border-width: 1px;
+	border-style: solid;
+	background: #FFF;
+	margin-left: 2.25em;
+}
+
+#timeline .message-head,
+#timeline .message-body {
+	padding: 8px;
+}
+
+#timeline .message-head {
+	color: #FFF;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	font-size: 12px;
+}
+
+#timeline .message.green                { border-color: #40D24C; }
+#timeline .message.green .message-head  { background-color: #40D24C; }
+#timeline .message.yellow               { border-color: #FFAC3B; }
+#timeline .message.yellow .message-head { background-color: #FFAC3B; }
+#timeline .message.red                  { border-color: #D24040; }
+#timeline .message.red .message-head    { background-color: #D24040; }
+
+#timeline .event {
+	line-height: 2em;
+	background-repeat: no-repeat;
+	background-size: auto 2em;
+	padding-left: 3em;
+}
+
+#timeline .event.green  { background-image: url('../images/status-green.png'); }
+#timeline .event.yellow { background-image: url('../images/status-yellow.png'); }
+#timeline .event.red    { background-image: url('../images/status-red.png'); }
+#timeline .event.gray   { background-image: url('../images/status-gray.png'); }
+
+#timeline .event .time {
+	margin-right: .25em;
+	font-weight: bold;
+}
+
+#timeline #bg-line {
+	position: absolute;
+	height: 100%;
+	border-left: 3px solid #EEE;
+	left: 16px;
+	top: 0;
+	margin: 0;
+	z-index: 0;
+}
+
+
+
+#big-gap {
+	display: none;
+	color: #CC0000;
+	padding-left: 3em;
+	font-size: 14px;
+}
+
+
+
+
+.chart {
+	padding-bottom: 20px;
+}
+
+.chart-title {
+	font-weight: bold;
+	text-align: center;
+}
+
+.chart-title a {
+	color: #2D6F96;
+	text-decoration: none;
+}
+
+.chart-title a:hover {
+	text-decoration: underline;
+}
+
+svg {
+  font: 10px sans-serif;
+  max-width: 100%; /* thanks for nothin, Safari */
+}
+
+.chart-container .chart svg {
+	font-size: 16px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #CCC;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+  stroke-linecap: square;
+}
+
+.line {
+  fill: none;
+  stroke: #CCC;
+  stroke-width: 2px;
+}
+
+.chart-container .chart .line {
+	stroke-width: 4px;
+}
+
+.min.line,
+.max.line {
+	stroke-dasharray: 1, 1;
+}
+
+.chart-container .chart .min.line,
+.chart-container .chart .max.line {
+	stroke-width: 2px;
+	stroke-dasharray: 5, 2;
+}
+
+.chart-container .chart .tolerance.line {
+	stroke-width: 1px;
+    stroke-dasharray: 5, 5;
+}
+
+.line.min {
+	stroke: #B1DC9C;
+}
+
+.line.main {
+	stroke: #333;
+	stroke-linecap: round;
+}
+
+.line.max {
+	stroke: #FFA447;
+}
+
+.line.tolerance {
+	stroke: #FF7070;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+	fill: #333;
+	stroke: #333;
+}
+
+.focus text {
+	font-size: 16px;
+
+	/* this nonsense makes it look halfway decent across browsers */
+	text-shadow:
+	   1px 1px 0 #FFF,
+	 -1px -1px 0 #FFF,  
+	  1px -1px 0 #FFF,
+	  -1px 1px 0 #FFF;
+}
+
+footer {
+	padding: 50px;
+	font-size: 12px;
+	color: #AAA;
+	font-family: sans-serif;
+	text-align: center;
+}
+
+#checkup-logo {
+	height: 1.75em;
+	vertical-align: top;
+	margin-left: 3px;
+}
+
+
+
+
+@media (max-width: 1200px) {
+	.focus text {
+		font-size: 22px;
+	}
+
+	#chart-grid { width: 70%; }
+	#timeline   { width: 30%; }
+}
+
+@media (max-width: 1050px) {
+	#chart-grid { width: 70%; }
+	#timeline   { width: 30%; }
+}
+
+
+@media (max-width: 899px) {
+	#chart-grid { width: 60%; }
+	#timeline   { width: 40%; }
+	.chart-50   { width: 100%; }
+
+	#overall-status-text {
+		font-size: 34px;
+		padding: 15px;
+	}
+
+	#timeline .message {
+		font-size: 16px;
+	}
+
+	.infobar .item {
+		margin-right: 1em;
+	}
+
+	.message {
+		font-size: 16px;
+	}
+
+	.message-head,
+	.message-body {
+		padding: 16px;
+	}
+
+	.message-head {
+		padding-top: 6px;
+		padding-bottom: 6px;
+		font-size: 14px;
+	}
+
+	svg {
+		font-size: 20px;
+	}
+
+	.axis path,
+	.axis line {
+		stroke: #DDD;
+		stroke-width: 2px;
+	}
+
+	.line {
+		stroke-width: 4px;
+	}
+
+	.min.line,
+	.max.line {
+		stroke-dasharray: 4, 3;
+	}
+
+	.focus text {
+		font-size: 20px;
+	}
+}
+
+@media (max-width: 600px) {
+	#chart-grid { width: 100%; }
+	#timeline   { width: 100%; }
+}
