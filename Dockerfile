@@ -7,7 +7,7 @@ ENV GOPATH /go
 RUN	apk add --no-cache \
 	ca-certificates
 
-COPY . /go/src/github.com/jessfraz/upmail
+COPY . /go/src/github.com/genuinetools/upmail
 
 RUN set -x \
 	&& apk add --no-cache --virtual .build-deps \
@@ -16,7 +16,7 @@ RUN set -x \
 		libc-dev \
 		libgcc \
 		make \
-	&& cd /go/src/github.com/jessfraz/upmail \
+	&& cd /go/src/github.com/genuinetools/upmail \
 	&& make static \
 	&& mv upmail /usr/bin/upmail \
 	&& apk del .build-deps \
