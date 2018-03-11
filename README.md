@@ -1,6 +1,6 @@
 # upmail
 
-[![Travis CI](https://travis-ci.org/jessfraz/upmail.svg?branch=master)](https://travis-ci.org/jessfraz/upmail)
+[![Travis CI](https://travis-ci.org/genuinetools/upmail.svg?branch=master)](https://travis-ci.org/genuinetools/upmail)
 
 Provides email notifications for [sourcegraph/checkup](https://github.com/sourcegraph/checkup).
 
@@ -8,16 +8,16 @@ Provides email notifications for [sourcegraph/checkup](https://github.com/source
 
 #### Binaries
 
-- **darwin** [386](https://github.com/jessfraz/upmail/releases/download/v0.3.0/upmail-darwin-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.3.0/upmail-darwin-amd64)
-- **freebsd** [386](https://github.com/jessfraz/upmail/releases/download/v0.3.0/upmail-freebsd-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.3.0/upmail-freebsd-amd64)
-- **linux** [386](https://github.com/jessfraz/upmail/releases/download/v0.3.0/upmail-linux-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.3.0/upmail-linux-amd64) / [arm](https://github.com/jessfraz/upmail/releases/download/v0.3.0/upmail-linux-arm) / [arm64](https://github.com/jessfraz/upmail/releases/download/v0.3.0/upmail-linux-arm64)
-- **solaris** [amd64](https://github.com/jessfraz/upmail/releases/download/v0.3.0/upmail-solaris-amd64)
-- **windows** [386](https://github.com/jessfraz/upmail/releases/download/v0.3.0/upmail-windows-386) / [amd64](https://github.com/jessfraz/upmail/releases/download/v0.3.0/upmail-windows-amd64)
+- **darwin** [386](https://github.com/genuinetools/upmail/releases/download/v0.3.0/upmail-darwin-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.3.0/upmail-darwin-amd64)
+- **freebsd** [386](https://github.com/genuinetools/upmail/releases/download/v0.3.0/upmail-freebsd-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.3.0/upmail-freebsd-amd64)
+- **linux** [386](https://github.com/genuinetools/upmail/releases/download/v0.3.0/upmail-linux-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.3.0/upmail-linux-amd64) / [arm](https://github.com/genuinetools/upmail/releases/download/v0.3.0/upmail-linux-arm) / [arm64](https://github.com/genuinetools/upmail/releases/download/v0.3.0/upmail-linux-arm64)
+- **solaris** [amd64](https://github.com/genuinetools/upmail/releases/download/v0.3.0/upmail-solaris-amd64)
+- **windows** [386](https://github.com/genuinetools/upmail/releases/download/v0.3.0/upmail-windows-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.3.0/upmail-windows-amd64)
 
 #### Via Go
 
 ```bash
-$ go get github.com/jessfraz/upmail
+$ go get github.com/genuinetools/upmail
 ```
 
 ## Usage

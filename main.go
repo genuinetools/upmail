@@ -15,8 +15,8 @@ import (
 
 	"google.golang.org/appengine"
 
-	"github.com/jessfraz/upmail/email"
-	"github.com/jessfraz/upmail/version"
+	"github.com/genuinetools/upmail/email"
+	"github.com/genuinetools/upmail/version"
 	"github.com/sirupsen/logrus"
 	"github.com/sourcegraph/checkup"
 )
