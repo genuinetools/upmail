@@ -1,3 +1,114 @@
+Release v1.13.11 (2018-03-08)
+===
+
+### Service Client Updates
+* `service/AWSMigrationHub`: Updates service API and documentation
+* `service/ecs`: Updates service API and documentation
+  * Amazon Elastic Container Service (ECS) now supports container health checks. Customers can now specify a docker container health check command and parameters in their task definition. ECS will monitor, report and take scheduling action based on the health status.
+* `service/pinpoint`: Updates service API and documentation
+  * With this release, you can export endpoints from your Amazon Pinpoint projects. You can export a) all of the endpoints assigned to a project or b) the subset of endpoints assigned to a segment.
+* `service/rds`: Updates service documentation
+  * Documentation updates for RDS
+
+Release v1.13.10 (2018-03-07)
+===
+
+### Service Client Updates
+* `aws/endpoints`: Updated Regions and Endpoints metadata.
+* `service/medialive`: Updates service API and documentation
+  * Updates API to model required traits and minimum/maximum constraints.
+
+Release v1.13.9 (2018-03-06)
+===
+
+### Service Client Updates
+* `service/ecs`: Updates service documentation
+  * Documentation updates for Amazon ECS
+* `aws/endpoints`: Updated Regions and Endpoints metadata.
+
+Release v1.13.8 (2018-03-01)
+===
+
+### Service Client Updates
+* `service/ec2`: Updates service API and documentation
+  * Added support for modifying Placement Group association of instances via ModifyInstancePlacement API.
+* `service/events`: Updates service API and documentation
+  * Added BatchParameters to the PutTargets API
+* `service/servicecatalog`: Updates service API and documentation
+  * This release of ServiceCatalog adds the DeleteTagOption API.
+* `service/ssm`: Updates service API and documentation
+  * This Inventory release supports the status message details reported by the last sync for the resource data sync API.
+* `service/storagegateway`: Updates service API and documentation
+  * AWS Storage Gateway (File) support for two new file share attributes are added.           1. Users can specify the S3 Canned ACL to use for new objects created in the file share.         2. Users can create file shares for requester-pays buckets.
+
+Release v1.13.7 (2018-02-28)
+===
+
+### Service Client Updates
+* `service/application-autoscaling`: Updates service API and documentation
+* `aws/endpoints`: Updated Regions and Endpoints metadata.
+
+Release v1.13.6 (2018-02-27)
+===
+
+### Service Client Updates
+* `service/ecr`: Updates service documentation
+  * Documentation updates for Amazon ECR.
+
+Release v1.13.5 (2018-02-26)
+===
+
+### Service Client Updates
+* `service/route53`: Updates service API
+  * Added support for creating LBR rules using ap-northeast-3 region.
+* `service/sts`: Updates service API and documentation
+  * Increased SAMLAssertion parameter size from 50000 to 100000 for AWS Security Token Service AssumeRoleWithSAML API to allow customers to pass bigger SAML assertions
+
+Release v1.13.4 (2018-02-23)
+===
+
+### Service Client Updates
+* `service/appstream`: Updates service API and documentation
+  * This API update is to enable customers to copy their Amazon AppStream 2.0 images within and between AWS Regions
+* `aws/endpoints`: Updated Regions and Endpoints metadata.
+
+Release v1.13.3 (2018-02-22)
+===
+
+### Service Client Updates
+* `service/ce`: Updates service API and documentation
+* `service/elasticloadbalancingv2`: Updates service documentation
+* `aws/endpoints`: Updated Regions and Endpoints metadata.
+
+Release v1.13.2 (2018-02-21)
+===
+
+### Service Client Updates
+* `service/codecommit`: Updates service API and documentation
+  * This release adds an API for adding a file directly to an AWS CodeCommit repository without requiring a Git client.
+* `service/ec2`: Updates service API and documentation
+  * Adds support for tagging an EBS snapshot as part of the API call that creates the EBS snapshot
+* `aws/endpoints`: Updated Regions and Endpoints metadata.
+* `service/serverlessrepo`: Updates service API, documentation, and paginators
+
+Release v1.13.1 (2018-02-20)
+===
+
+### Service Client Updates
+* `service/autoscaling`: Updates service API and documentation
+  * Amazon EC2 Auto Scaling support for service-linked roles
+* `aws/endpoints`: Updated Regions and Endpoints metadata.
+* `service/waf`: Updates service API and documentation
+  * The new PermissionPolicy APIs in AWS WAF Regional allow customers to attach resource-based policies to their entities.
+* `service/waf-regional`: Updates service API and documentation
+
+Release v1.13.0 (2018-02-19)
+===
+
+### Service Client Updates
+* `service/config`: Updates service API
+  * With this release, AWS Config updated the ConfigurationItemStatus enum values. The values prior to this update did not represent appropriate values returned by GetResourceConfigHistory. You must update your code to enumerate the new enum values so this is a breaking change. To map old properties to new properties, use the following descriptions: New discovered resource - Old property: Discovered, New property: ResourceDiscovered. Updated resource - Old property: Ok, New property: OK. Deleted resource - Old property: Deleted, New property: ResourceDeleted or ResourceDeletedNotRecorded. Not-recorded resource - Old property: N/A, New property: ResourceNotRecorded or ResourceDeletedNotRecorded.
+
 Release v1.12.79 (2018-02-16)
 ===
 
