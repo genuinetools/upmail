@@ -8,11 +8,11 @@ Provides email notifications for [sourcegraph/checkup](https://github.com/source
 
 #### Binaries
 
-- **darwin** [386](https://github.com/genuinetools/upmail/releases/download/v0.4.1/upmail-darwin-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.1/upmail-darwin-amd64)
-- **freebsd** [386](https://github.com/genuinetools/upmail/releases/download/v0.4.1/upmail-freebsd-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.1/upmail-freebsd-amd64)
-- **linux** [386](https://github.com/genuinetools/upmail/releases/download/v0.4.1/upmail-linux-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.1/upmail-linux-amd64) / [arm](https://github.com/genuinetools/upmail/releases/download/v0.4.1/upmail-linux-arm) / [arm64](https://github.com/genuinetools/upmail/releases/download/v0.4.1/upmail-linux-arm64)
-- **solaris** [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.1/upmail-solaris-amd64)
-- **windows** [386](https://github.com/genuinetools/upmail/releases/download/v0.4.1/upmail-windows-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.1/upmail-windows-amd64)
+- **darwin** [386](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-darwin-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-darwin-amd64)
+- **freebsd** [386](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-freebsd-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-freebsd-amd64)
+- **linux** [386](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-linux-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-linux-amd64) / [arm](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-linux-arm) / [arm64](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-linux-arm64)
+- **solaris** [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-solaris-amd64)
+- **windows** [386](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-windows-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-windows-amd64)
 
 #### Via Go
 
@@ -32,7 +32,7 @@ $ upmail -h
       |_|
 
  Email notification hook for https://github.com/sourcegraph/checkup.
- Version: v0.4.1
+ Version: v0.4.2
  Build: 2905d94
 
   -appengine
