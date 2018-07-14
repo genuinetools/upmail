@@ -33,15 +33,15 @@ $ upmail -h
 
  Email notification hook for https://github.com/sourcegraph/checkup.
  Version: v0.4.1
- Build: 640385f
+ Build: 2905d94
 
   -appengine
         enable the server for running in Google App Engine
   -config string
         config file location (default "checkup.json")
   -d    run in debug mode
-  -interval string
-        check interval (ex. 5ms, 10s, 1m, 3h) (default "10m")
+  -interval duration
+        check interval (ex. 5ms, 10s, 1m, 3h) (default 10m0s)
   -mailgun string
         Mailgun API Key to use for sending email (optional)
   -mailgun-domain string

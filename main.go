@@ -40,7 +40,7 @@ const (
 var (
 	configFile string
 	recipient  string
-	interval   string
+	interval   time.Duration
 
 	ae bool
 
@@ -60,7 +60,7 @@ func init() {
 	// parse flags
 	flag.StringVar(&configFile, "config", "checkup.json", "config file location")
 	flag.StringVar(&recipient, "recipient", "", "recipient for email notifications")
-	flag.StringVar(&interval, "interval", "10m", "check interval (ex. 5ms, 10s, 1m, 3h)")
+	flag.DurationVar(&interval, "interval", 10*time.Minute, "check interval (ex. 5ms, 10s, 1m, 3h)")
 
 	flag.BoolVar(&ae, "appengine", false, "enable the server for running in Google App Engine")
 
@@ -105,7 +105,8 @@ func init() {
 }
 
 func main() {
-	var ticker *time.Ticker
+	ticker := time.NewTicker(interval)
+
 	// On ^C, or SIGTERM handle exit.
 	s := make(chan os.Signal, 1)
 	signal.Notify(s, os.Interrupt)
@@ -144,14 +145,7 @@ func main() {
 	}
 	c.Notifier = n
 
-	// parse the duration
-	dur, err := time.ParseDuration(interval)
-	if err != nil {
-		logrus.Fatalf("Parsing %s as duration failed: %v", interval, err)
-	}
-
 	logrus.Infof("Starting checks that will send emails to: %s", recipient)
-	ticker = time.NewTicker(dur)
 
 	if ae {
 		// setup necessary app engine health checks and listener
