@@ -33,16 +33,17 @@ Usage: upmail <command>
 
 Flags:
 
-  --mailgun-domain  Mailgun Domain to use for sending email (optional) (default: <none>)
-  --password        SMTP server password (default: <none>)
   --appengine       enable the server for running in Google App Engine (default: false)
-  --config          config file location (default: checkup.json)
-  -d                enable debug logging (default: false)
+  --password        SMTP server password (default: <none>)
+  --recipient       recipient for email notifications (default: <none>)
+  --mailgun-domain  Mailgun Domain to use for sending email (optional) (default: <none>)
+  --sender          SMTP default sender email address for email notifications (default: <none>)
   --server          SMTP server for email notifications (default: <none>)
   --username        SMTP server username (default: <none>)
+  --config          config file location (default: checkup.json)
+  -d                enable debug logging (default: false)
   --interval        check interval (ex. 5ms, 10s, 1m, 3h) (default: 10m0s)
   --mailgun         Mailgun API Key to use for sending email (optional) (default: <none>)
-  --recipient       recipient for email notifications (default: <none>)
 
 Commands:
 

@@ -62,7 +62,7 @@ func main() {
 	p.FlagSet.StringVar(&mailgunDomain, "mailgun-domain", "", "Mailgun Domain to use for sending email (optional)")
 
 	p.FlagSet.StringVar(&smtpServer, "server", "", "SMTP server for email notifications")
-	flag.StringVar(&smtpSender, "sender", "", "SMTP default sender email address for email notifications")
+	p.FlagSet.StringVar(&smtpSender, "sender", "", "SMTP default sender email address for email notifications")
 	p.FlagSet.StringVar(&smtpUsername, "username", "", "SMTP server username")
 	p.FlagSet.StringVar(&smtpPassword, "password", "", "SMTP server password")
 
