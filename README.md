@@ -27,39 +27,24 @@ $ go get github.com/genuinetools/upmail
 
 ```console
 $ upmail -h
-                             _ _
- _   _ _ __  _ __ ___   __ _(_) |
-| | | | '_ \| '_ ` _ \ / _` | | |
-| |_| | |_) | | | | | | (_| | | |
- \__,_| .__/|_| |_| |_|\__,_|_|_|
-      |_|
+upmail -  Email notification hook for https://github.com/sourcegraph/checkup.
 
- Email notification hook for https://github.com/sourcegraph/checkup.
- Version: v0.4.2
- Build: 2905d94
+Usage: upmail <command>
 
-  -appengine
-        enable the server for running in Google App Engine
-  -config string
-        config file location (default "checkup.json")
-  -d    run in debug mode
-  -interval duration
-        check interval (ex. 5ms, 10s, 1m, 3h) (default 10m0s)
-  -mailgun string
-        Mailgun API Key to use for sending email (optional)
-  -mailgun-domain string
-        Mailgun Domain to use for sending email (optional)
-  -password string
-        SMTP server password
-  -recipient string
-        recipient for email notifications
-  -sender string
-        SMTP default sender email address for email notifications
-  -server string
-        SMTP server for email notifications
-  -username string
-        SMTP server username
-  -v    print version and exit (shorthand)
-  -version
-        print version and exit
+Flags:
+
+  --mailgun-domain  Mailgun Domain to use for sending email (optional) (default: <none>)
+  --password        SMTP server password (default: <none>)
+  --appengine       enable the server for running in Google App Engine (default: false)
+  --config          config file location (default: checkup.json)
+  -d                enable debug logging (default: false)
+  --server          SMTP server for email notifications (default: <none>)
+  --username        SMTP server username (default: <none>)
+  --interval        check interval (ex. 5ms, 10s, 1m, 3h) (default: 10m0s)
+  --mailgun         Mailgun API Key to use for sending email (optional) (default: <none>)
+  --recipient       recipient for email notifications (default: <none>)
+
+Commands:
+
+  version  Show the version information.
 ```
