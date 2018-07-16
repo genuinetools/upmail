@@ -18,39 +18,39 @@ jobs:
       deploy:
         provider: releases
         file:
-          - cross/upmail-linux-amd64.md5
-          - cross/upmail-windows-386.sha256
-          - cross/upmail-linux-arm
-          - cross/upmail-darwin-amd64.md5
           - cross/upmail-darwin-amd64
-          - cross/upmail-solaris-amd64.md5
-          - cross/upmail-linux-arm64.sha256
-          - cross/upmail-linux-arm.sha256
-          - cross/upmail-linux-386.sha256
+          - cross/upmail-darwin-amd64.md5
+          - cross/upmail-darwin-amd64.sha256
+          - cross/upmail-darwin-386
           - cross/upmail-darwin-386.md5
-          - cross/upmail-windows-386.md5
+          - cross/upmail-darwin-386.sha256
+          - cross/upmail-freebsd-amd64
           - cross/upmail-freebsd-amd64.md5
-          - cross/upmail-linux-arm64.md5
-          - cross/upmail-linux-arm64
           - cross/upmail-freebsd-amd64.sha256
-          - cross/upmail-freebsd-386.md5
-          - cross/upmail-linux-amd64.sha256
-          - cross/upmail-linux-386.md5
           - cross/upmail-freebsd-386
+          - cross/upmail-freebsd-386.md5
+          - cross/upmail-freebsd-386.sha256
+          - cross/upmail-linux-arm
+          - cross/upmail-linux-arm.md5
+          - cross/upmail-linux-arm.sha256
+          - cross/upmail-linux-arm64
+          - cross/upmail-linux-arm64.md5
+          - cross/upmail-linux-arm64.sha256
+          - cross/upmail-linux-amd64
+          - cross/upmail-linux-amd64.md5
+          - cross/upmail-linux-amd64.sha256
+          - cross/upmail-linux-386
+          - cross/upmail-linux-386.md5
+          - cross/upmail-linux-386.sha256
+          - cross/upmail-solaris-amd64
+          - cross/upmail-solaris-amd64.md5
           - cross/upmail-solaris-amd64.sha256
           - cross/upmail-windows-amd64
           - cross/upmail-windows-amd64.md5
           - cross/upmail-windows-amd64.sha256
-          - cross/upmail-linux-arm.md5
-          - cross/upmail-darwin-386.sha256
-          - cross/upmail-darwin-amd64.sha256
           - cross/upmail-windows-386
-          - cross/upmail-solaris-amd64
-          - cross/upmail-darwin-386
-          - cross/upmail-linux-386
-          - cross/upmail-freebsd-amd64
-          - cross/upmail-freebsd-386.sha256
-          - cross/upmail-linux-amd64
+          - cross/upmail-windows-386.md5
+          - cross/upmail-windows-386.sha256
         skip_cleanup: true
         on:
           tags: true

@@ -1,22 +1,25 @@
 # upmail
 
-[![Travis CI](https://travis-ci.org/genuinetools/upmail.svg?branch=master)](https://travis-ci.org/genuinetools/upmail)
+[![Travis CI](https://img.shields.io/travis/genuinetools/upmail.svg?style=for-the-badge)](https://travis-ci.org/genuinetools/upmail)
+[![GoDoc](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=for-the-badge)](https://godoc.org/github.com/genuinetools/upmail)
+[![Github All Releases](https://img.shields.io/github/downloads/genuinetools/upmail/total.svg?style=for-the-badge)](https://github.com/genuinetools/upmail/releases)
 
 Provides email notifications for [sourcegraph/checkup](https://github.com/sourcegraph/checkup).
+
+ * [Installation](README.md#installation)
+      * [Binaries](README.md#binaries)
+      * [Via Go](README.md#via-go)
+ * [Usage](README.md#usage)
 
 ## Installation
 
 #### Binaries
 
-- **darwin** [386](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-darwin-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-darwin-amd64)
-- **freebsd** [386](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-freebsd-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-freebsd-amd64)
-- **linux** [386](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-linux-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-linux-amd64) / [arm](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-linux-arm) / [arm64](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-linux-arm64)
-- **solaris** [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-solaris-amd64)
-- **windows** [386](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-windows-386) / [amd64](https://github.com/genuinetools/upmail/releases/download/v0.4.2/upmail-windows-amd64)
+For installation instructions from binaries please visit the [Releases Page](https://github.com/genuinetools/upmail/releases).
 
 #### Via Go
 
-```bash
+```console
 $ go get github.com/genuinetools/upmail
 ```
 
