@@ -1,3 +1,4 @@
+
 # Gopkg.toml example
 #
 # Refer to https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md
@@ -19,11 +20,7 @@
 #  name = "github.com/x/y"
 #  version = "2.4.0"
 
-[prune]
-  non-go = true
-  go-tests = true
-  unused-packages = true
 
-[[override]]
-  name = "github.com/Sirupsen/logrus"
-  source = "github.com/sirupsen/logrus"
+[[constraint]]
+  branch = "master"
+  name = "golang.org/x/crypto"
