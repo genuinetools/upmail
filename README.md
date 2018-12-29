@@ -10,6 +10,11 @@ Provides email notifications for [sourcegraph/checkup](https://github.com/source
 
 <!-- toc -->
 
+- [Installation](#installation)
+    + [Binaries](#binaries)
+    + [Via Go](#via-go)
+- [Usage](#usage)
+
 <!-- tocstop -->
 
 ## Installation
