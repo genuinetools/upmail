@@ -54,7 +54,7 @@ func (n Notifier) sendEmail(result checkup.Result) error {
 			/* To */ n.Recipient,
 		))
 		if err != nil {
-			return fmt.Errorf("Sending Mailgun message failed: response: %#v error: %v", msg, err)
+			return fmt.Errorf("sending Mailgun message failed: response: %#v error: %v", msg, err)
 		}
 		logrus.Infof("Mailgun send message succeeded: %#v", msg)
 		return nil
@@ -71,7 +71,7 @@ Time: %s
 
 	// send the email
 	if err := smtp.SendMail(n.Server, n.Auth, n.Sender, []string{n.Recipient}, []byte(body)); err != nil {
-		return fmt.Errorf("Send mail failed: %v", err)
+		return fmt.Errorf("send mail failed: %v", err)
 	}
 
 	return nil

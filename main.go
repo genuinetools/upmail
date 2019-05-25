@@ -76,10 +76,10 @@ func main() {
 		}
 
 		if len(configFile) < 1 {
-			return fmt.Errorf("Config file cannot be empty")
+			return fmt.Errorf("config file cannot be empty")
 		}
 		if len(recipient) < 1 {
-			return fmt.Errorf("Recipient cannot be empty")
+			return fmt.Errorf("recipient cannot be empty")
 		}
 		if len(smtpServer) < 1 && len(mailgunAPIKey) < 1 && len(mailgunDomain) < 1 {
 			return fmt.Errorf("SMTP server OR Mailgun API Key cannot be empty")
