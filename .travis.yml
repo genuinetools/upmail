@@ -42,9 +42,6 @@ jobs:
           - cross/upmail-linux-386
           - cross/upmail-linux-386.md5
           - cross/upmail-linux-386.sha256
-          - cross/upmail-solaris-amd64
-          - cross/upmail-solaris-amd64.md5
-          - cross/upmail-solaris-amd64.sha256
           - cross/upmail-windows-amd64
           - cross/upmail-windows-amd64.md5
           - cross/upmail-windows-amd64.sha256
